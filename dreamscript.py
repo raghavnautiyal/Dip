@@ -89,11 +89,12 @@ TT_INT		= 'INT'
 TT_FLOAT    = 'FLOAT' 
 TT_PLUS     = 'PLUS'
 TT_MINUS    = 'MINUS'
+TT_MODULUS  = 'MODULUS'
 TT_MUL      = 'MUL'
 TT_DIV      = 'DIV'
 TT_LPAREN   = 'LPAREN'
 TT_RPAREN   = 'RPAREN'
-TT_EOF			= 'EOF'
+TT_EOF		= 'EOF'
 
 class Token:
 		def __init__(self, type_, value=None, pos_start=None, pos_end=None):
@@ -147,6 +148,9 @@ class Lexer:
 								self.advance()
 						elif self.current_char == '/':
 								tokens.append(Token(TT_DIV, pos_start=self.pos))
+								self.advance()
+						elif self.current_char == '%':
+								tokens.append(Token(TT_MODULUS, pos_start=self.pos))
 								self.advance()
 						elif self.current_char == '(':
 								tokens.append(Token(TT_LPAREN, pos_start=self.pos))
@@ -264,7 +268,7 @@ class Parser:
 		if not res.error and self.current_tok.type != TT_EOF:
 			return res.failure(InvalidSyntaxError(
 				self.current_tok.pos_start, self.current_tok.pos_end,
-				"Expected '+', '-', '*' or '/'"
+				"Expected '+', '-', '*', '/' or '%'"
 			))
 		return res
 
@@ -303,7 +307,7 @@ class Parser:
 		))
 
 	def term(self):
-		return self.bin_op(self.factor, (TT_MUL, TT_DIV))
+		return self.bin_op(self.factor, (TT_MUL, TT_DIV, TT_MODULUS))
 
 	def expr(self):
 		return self.bin_op(self.term, (TT_PLUS, TT_MINUS))
@@ -374,6 +378,10 @@ class Number:
 		if isinstance(other, Number):
 			return Number(self.value * other.value).set_context(self.context), None
 
+	def modulise(self, other):
+		if isinstance(other, Number):
+			return Number(self.value % other.value).set_context(self.context), None
+
 	def dived_by(self, other):
 		if isinstance(other, Number):
 			if other.value == 0:
@@ -431,6 +439,8 @@ class Interpreter:
 			result, error = left.multed_by(right)
 		elif node.op_tok.type == TT_DIV:
 			result, error = left.dived_by(right)
+		elif node.op_tok.type == TT_MODULUS:
+			result, error = left.modulise(right)
 
 		if error:
 			return res.failure(error)
