@@ -90,6 +90,7 @@ TT_FLOAT    = 'FLOAT'
 TT_PLUS     = 'PLUS'
 TT_MINUS    = 'MINUS'
 TT_MODULUS  = 'MODULUS'
+TT_POWER    = 'POWER'
 TT_MUL      = 'MUL'
 TT_DIV      = 'DIV'
 TT_LPAREN   = 'LPAREN'
@@ -151,6 +152,9 @@ class Lexer:
 								self.advance()
 						elif self.current_char == '%':
 								tokens.append(Token(TT_MODULUS, pos_start=self.pos))
+								self.advance()
+						elif self.current_char == '^':
+								tokens.append(Token(TT_POWER, pos_start=self.pos))
 								self.advance()
 						elif self.current_char == '(':
 								tokens.append(Token(TT_LPAREN, pos_start=self.pos))
@@ -307,7 +311,7 @@ class Parser:
 		))
 
 	def term(self):
-		return self.bin_op(self.factor, (TT_MUL, TT_DIV, TT_MODULUS))
+		return self.bin_op(self.factor, (TT_MUL, TT_DIV, TT_MODULUS, TT_POWER))
 
 	def expr(self):
 		return self.bin_op(self.term, (TT_PLUS, TT_MINUS))
@@ -382,6 +386,10 @@ class Number:
 		if isinstance(other, Number):
 			return Number(self.value % other.value).set_context(self.context), None
 
+	def raiseto(self, other):
+		if isinstance(other, Number):
+			return Number(self.value ** other.value).set_context(self.context), None
+
 	def dived_by(self, other):
 		if isinstance(other, Number):
 			if other.value == 0:
@@ -441,6 +449,8 @@ class Interpreter:
 			result, error = left.dived_by(right)
 		elif node.op_tok.type == TT_MODULUS:
 			result, error = left.modulise(right)
+		elif node.op_tok.type == TT_POWER:
+			result, error = left.raiseto(right)
 
 		if error:
 			return res.failure(error)
