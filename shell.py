@@ -1,11 +1,12 @@
 import dreamscript
 
+print("\nDreamscript Version 0.1\n")
+print("Type in 'exit' to exit the prompt\n")
+
 while True:
-    print("\nDreamscript Version 0.1\n")
-    print("Type in 'exit' to exit the prompt\n")
     raw_text = input("DreamScript>  ")
     result, error = dreamscript.run('<stdin>', raw_text)
-    
+
     command = 'exit'
 
     if command == raw_text.lower():
