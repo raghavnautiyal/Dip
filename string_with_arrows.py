@@ -1,5 +1,5 @@
 def string_with_arrows(text, pos_start, pos_end):
-    result = ""
+    result = ''
 
     # Calculate indices
     idx_start = max(text.rfind('\n', 0, pos_start.idx), 0)
