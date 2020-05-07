@@ -957,7 +957,7 @@ class Interpreter:
         elif node.op_tok.type == TT_DIV:
             result, error = left.dived_by(right)
         elif node.op_tok.type == TT_POWER:
-            result, error = left.powed_by(right)
+            result, error = left.raiseto(right)
         elif node.op_tok.type == TT_EE:
             result, error = left.get_comparison_eq(right)
         elif node.op_tok.type == TT_NE:
