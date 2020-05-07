@@ -920,7 +920,7 @@ class Interpreter:
         if not value:
             return res.failure(RTError(
                 node.pos_start, node.pos_end,
-                f"Oops! {var_name} is not defined! Did you forget to define this variable {var_name}?", 
+                f"Oops! '{var_name}' is not defined! Did you forget to define this variable '{var_name}'?", 
                 context
             ))
 
