@@ -10,7 +10,7 @@ while True:
     command = 'exit'
 
     if command == raw_text.lower():
-        exit(0)
+        exit()
 
     if error: print(error.as_string())
     elif result: print(result)
