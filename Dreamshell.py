@@ -20,7 +20,7 @@ class TextConsole(tk.Text):
         kw.setdefault('width', 83)
         kw.setdefault('height', 43)
         kw.setdefault('wrap', 'word')
-        kw.setdefault('prompt1', 'Dreamscript>')
+        kw.setdefault('prompt1', 'Dreamscript> ')
         kw.setdefault('prompt2', '... ')
         banner = kw.pop('banner', "Dreamscript version 0.1\nType in 'exit' to exit the shell\n\n")
         self._prompt1 = kw.pop('prompt1')
