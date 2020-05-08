@@ -22,7 +22,7 @@ class TextConsole(tk.Text):
         kw.setdefault('wrap', 'word')
         kw.setdefault('prompt1', 'Dreamscript> ')
         kw.setdefault('prompt2', '... ')
-        banner = kw.pop('banner', "Dreamscript version 0.1\nType in 'exit' to exit the shell\n\n")
+        banner = kw.pop('banner', "Dreamscript Beta (Version 0.1)\nType in 'exit' to exit the shell\n\n")
         self._prompt1 = kw.pop('prompt1')
         self._prompt2 = kw.pop('prompt2')
         tk.Text.__init__(self, master, **kw)
@@ -268,7 +268,8 @@ class TextConsole(tk.Text):
 if __name__ == '__main__':
     root = tk.Tk()
     console = TextConsole(root)
-    root.title("Dreamscript Version 0.1 Shell")
+    root.iconbitmap('/Users/raghav/Desktop/School/Parser/DreamScript/dreamshellicon.ico')
+    root.title("Dreamscript Beta (Version 0.1) - Shell")
     root.iconbitmap('/Users/raghav/Desktop/School/Parser/DreamScript/Icon.ico')
     console.pack(fill='both', expand=True)
     root.mainloop()

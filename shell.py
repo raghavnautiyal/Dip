@@ -1,6 +1,6 @@
 import dreamscript
 
-print("\nDreamscript Version 0.1\n")
+print("\nDreamscript Beta (Version 0.1)\n")
 print("Type in 'exit' to exit the prompt\n")
 
 while True:

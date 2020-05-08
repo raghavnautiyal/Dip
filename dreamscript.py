@@ -184,7 +184,7 @@ class Lexer:
                         elif self.current_char == '+':
                                 tokens.append(Token(TT_PLUS, pos_start=self.pos))
                                 self.advance()
-                        elif self.current_char == '"':
+                        elif self.current_char == '"' :
                             tokens.append(self.make_string())
                         elif self.current_char == '-':
                                 tokens.append(self.make_minus_or_arrow())
@@ -259,9 +259,9 @@ class Lexer:
             self.advance()
 
             escape_characters = {
-                'newline': '\n',
-                'tab': '\t',
-                'backspace': '\b'
+                'n': '\n',
+                't': '\t',
+                'b': '\b'
 
             }
 
