@@ -632,22 +632,22 @@ class Parser:
                 res.register_advancement()
                 self.advance()
             
-            statements = res.register(self.statements())
-            if res.error: return res
-            else_case = (statements, True)
+                statements = res.register(self.statements())
+                if res.error: return res
+                else_case = (statements, True)
             
-            if self.current_tok.matches(TT_KEYWORD, 'end'):
-                res.register_advancement()
-                self.advance()
+                if self.current_tok.matches(TT_KEYWORD, 'end'):
+                    res.register_advancement()
+                    self.advance()
+                else:
+                    return res.failure(InvalidSyntaxError(
+                        self.current_tok.pos_start, self.current_tok.pos_end,
+                        "Expected 'end'"
+                        ))
             else:
-                return res.failure(InvalidSyntaxError(
-                    self.current_tok.pos_start, self.current_tok.pos_end,
-                    "Expected 'end'"
-                    ))
-        else:
-            expr = res.register(self.expr())
-            if res.error: return res
-            else_case = (expr, False)
+                expr = res.register(self.expr())
+                if res.error: return res
+                else_case = (expr, False)
             
         return res.success(else_case)
         
@@ -1313,7 +1313,7 @@ class Value:
         if not other: other = self
         return RTError(
             self.pos_start, other.pos_end,
-            'Illegal operation',
+            'Illegal operation - check you are comparing two different data types (eg. integer and string)',
             self.context
 		)
 
@@ -1596,17 +1596,20 @@ class BuiltInFunction(BaseFunction):
     execute_print.arg_names = ["value"]
 
     def execute_sin(self, exec_ctx):
-        ans = math.sin(float(str(exec_ctx.symbol_table.get('value'))))
+        smt = math.sin(float(str(exec_ctx.symbol_table.get('value'))))
+        ans = Number(smt)
         return RTResult().success(ans)
     execute_sin.arg_names = ["value"]
 
     def execute_cos(self, exec_ctx):
-        ans = math.cos(float(str(exec_ctx.symbol_table.get('value'))))
+        smt = math.cos(float(str(exec_ctx.symbol_table.get('value'))))
+        ans = Number(smt)        
         return RTResult().success(ans)
     execute_cos.arg_names = ["value"]
 
     def execute_tan(self, exec_ctx):
-        ans = math.tan(float(str(exec_ctx.symbol_table.get('value'))))
+        smt = math.tan(float(str(exec_ctx.symbol_table.get('value'))))
+        ans = Number(smt)
         return RTResult().success(ans)
     execute_tan.arg_names = ["value"]
 
@@ -1878,7 +1881,6 @@ class Interpreter:
                 f"Oops! '{var_name}' is not defined! Did you forget to define this variable '{var_name}'?", 
                 context
             ))
-
         value = value.copy().set_pos(node.pos_start, node.pos_end).set_context(context)
         return res.success(value)
 
@@ -1970,7 +1972,7 @@ class Interpreter:
             expr, should_return_null = node.else_case
             else_value = res.register(self.visit(expr, context))
             if res.error: return res
-            return res.success(Number.null if should_return_null else else_value)
+            return res.success(Number.null if should_return_null else expr_value)
         
         return res.success(Number.null)
     
