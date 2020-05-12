@@ -253,9 +253,14 @@ class TextConsole(tk.Text):
                 self.prompt()
 
             elif result:
-                self.insert('insert', result)
-                self.insert('insert', '\n')
-                self.prompt()
+                if len(result.elements) == 1:
+                    self.insert('insert', repr(result.elements[0]))
+                    self.insert('insert', '\n')
+                    self.prompt()
+                else:
+                    self.insert('insert', repr(result))
+                    self.insert('insert', '\n')
+                    self.prompt()
             else:
                 self.prompt()
 
@@ -268,9 +273,6 @@ class TextConsole(tk.Text):
 if __name__ == '__main__':
     root = tk.Tk()
     console = TextConsole(root)
-    root.iconbitmap('/Users/raghav/Desktop/School/Parser/DreamScript/dreamshellicon.ico')
     root.title("Dreamscript Beta (Version 0.1) - Shell")
-    root.iconbitmap('/Users/raghav/Desktop/School/Parser/DreamScript/Icon.ico')
     console.pack(fill='both', expand=True)
     root.mainloop()
-

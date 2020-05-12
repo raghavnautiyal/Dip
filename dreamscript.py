@@ -27,10 +27,10 @@ class Error:
                 self.details = details
         
         def as_string(self):
-                result  = f'{self.error_name}: {self.details}\n'
-                result += f'File {self.pos_start.fn}, line {self.pos_start.ln + 1}'
-                result += '\n\n' + string_with_arrows(self.pos_start.ftxt, self.pos_start, self.pos_end)
-                return result
+            result  = f'{self.error_name}: {self.details}\n'
+            result += f'File {self.pos_start.fn}, line {self.pos_start.ln + 1}'
+            result += '\n\n' + string_with_arrows(self.pos_start.ftxt, self.pos_start, self.pos_end)
+            return result
 
 class IllegalCharError(Error):
         def __init__(self, pos_start, pos_end, details):
@@ -849,7 +849,7 @@ class Parser:
             res.register_advancement()
             self.advance()
             
-            return res.success(WhileNode(condition, body, True))
+            return res.success(WhileNode(condition, body, False))
             
         body = res.register(self.expr())
         if res.error: return res
@@ -1966,13 +1966,13 @@ class Interpreter:
             if condition_value.is_true():
                 expr_value = res.register(self.visit(expr, context))
                 if res.error: return res
-                return res.success(Number.null if should_return_null else expr_value)
+                return res.success(expr_value)
         
         if node.else_case:
             expr, should_return_null = node.else_case
             else_value = res.register(self.visit(expr, context))
             if res.error: return res
-            return res.success(Number.null if should_return_null else expr_value)
+            return res.success(expr_value)
         
         return res.success(Number.null)
     
@@ -2006,9 +2006,8 @@ class Interpreter:
             if res.error: return res
             
         return res.success(
-            Number.null if node.should_return_null else
             List(elements).set_context(context).set_pos(node.pos_start, node.pos_end)        
-            )
+        )
         
     def visit_WhileNode(self, node, context):
         res = RTResult()
@@ -2024,7 +2023,6 @@ class Interpreter:
             if res.error: return res
             
         return res.success(
-            Number.null if node.should_return_null else
             List(elements).set_context(context).set_pos(node.pos_start, node.pos_end)        
         )
 
