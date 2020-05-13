@@ -1,16 +1,13 @@
 # A dreamscript program to check if a triangle is valid or not
 
+variable angle1 = print("Enter the measure of the first angle:  ") +  input_integer() 
 
-print("Enter the measure of the first angle:  ")
+variable angle2 =  print("Enter the measure of the second angle:  ") +  input_integer() 
 
-variable t1 = input_integer()
+variable angle3 =  print("Enter the measure of the third angle:  ") +  input_integer() 
 
-print("Enter the measure of the first angle:  ") 
-
-variable t2 =  input_integer()
-
-print("Enter the measure of the first angle:  ") 
-
-variable t3 =  input_integer()
-
-if t1 + t2 + t3 != 180 then print("Sorry, not a valid triangle :(") else print("Yay, it's a valid triangle :)")
+if angle1 + angle2 + angle3 != 180 then 
+ print("Sorry, not a valid triangle :(") 
+else 
+    print("Yay, it's a valid triangle :)")
+end

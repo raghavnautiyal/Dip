@@ -20,29 +20,30 @@ LETTERS_DIGITS = LETTERS + DIGITS
 #######################################
 
 class Error:
-        def __init__(self, pos_start, pos_end, error_name, details):
-                self.pos_start = pos_start
-                self.pos_end = pos_end
-                self.error_name = error_name
-                self.details = details
-        
-        def as_string(self):
-            result  = f'{self.error_name}: {self.details}\n'
-            result += f'File {self.pos_start.fn}, line {self.pos_start.ln + 1}'
-            result += '\n\n' + string_with_arrows(self.pos_start.ftxt, self.pos_start, self.pos_end)
-            return result
+  def __init__(self, pos_start, pos_end, error_name, details):
+    self.pos_start = pos_start
+    self.pos_end = pos_end
+    self.error_name = error_name
+    self.details = details
+  
+  def as_string(self):
+    result  = f'{self.error_name}: {self.details}\n'
+    result += f'File {self.pos_start.fn}, line {self.pos_start.ln + 1}'
+    result += '\n\n' + string_with_arrows(self.pos_start.ftxt, self.pos_start, self.pos_end)
+    return result
 
 class IllegalCharError(Error):
-        def __init__(self, pos_start, pos_end, details):
-                super().__init__(pos_start, pos_end, 'Illegal Character / Character Not Found', details)
+  def __init__(self, pos_start, pos_end, details):
+    super().__init__(pos_start, pos_end, 'Illegal Character', details)
 
 class ExpectedCharError(Error):
-        def __init__(self, pos_start, pos_end, details=''):
-                super().__init__(pos_start, pos_end, 'Expected Character', details)
+  def __init__(self, pos_start, pos_end, details):
+    super().__init__(pos_start, pos_end, 'Expected Character', details)
 
 class InvalidSyntaxError(Error):
-        def __init__(self, pos_start, pos_end, details=''):
-                super().__init__(pos_start, pos_end, 'Invalid Syntax', details)
+  def __init__(self, pos_start, pos_end, details=''):
+    super().__init__(pos_start, pos_end, 'Invalid Syntax / Character Not Found', details)
+
 
 class RTError(Error):
         def __init__(self, pos_start, pos_end, details, context):
@@ -155,7 +156,7 @@ class Token:
                     self.pos_end.advance()
 
                 if pos_end:
-                    self.pos_end = pos_end
+                    self.pos_end = pos_end.copy()
 
         def matches(self, type_, value):
             return self.type == type_ and self.value == value
@@ -186,7 +187,7 @@ class Lexer:
                 while self.current_char != None:
                         if self.current_char in ' \t':
                                 self.advance()
-                        elif self.current_char in '#':
+                        elif self.current_char == '#':
                                 self.skip_comment()
                         elif self.current_char in DIGITS:
                                 tokens.append(self.make_number())
@@ -282,7 +283,6 @@ class Lexer:
                 'n': '\n',
                 't': '\t',
                 'b': '\b'
-
             }
 
             while self.current_char != None and (self.current_char != '"' or escape_character):
@@ -584,9 +584,10 @@ class Parser:
         if not res.error and self.current_tok.type != TT_EOF:
             return res.failure(InvalidSyntaxError(
                 self.current_tok.pos_start, self.current_tok.pos_end,
-                "Expected identifier, '+', '-', '*', '/' or '%'"
-            ))
+                "Token cannot appear after previous tokens"
+        ))
         return res
+        
 
     def list_expr(self):
         res = ParseResult()
@@ -1440,6 +1441,11 @@ class Number:
         else:
             return None, Value.illegal_operation(self, other)
 
+        if isinstance(other, Number):
+            return Number(self.value + other.value).set_context(self.context), None
+        else:
+            return None, Value.illegal_operation(self, other)
+
     def subbed_by(self, other):
         if isinstance(other, Number):
             return Number(self.value - other.value).set_context(self.context), None
@@ -1580,7 +1586,7 @@ class String(Value):
         return copy
         
     def __str__(self):
-        return self.value
+        return str(self.value)
 
     def __repr__(self):
         return f'"{self.value}"'
@@ -1690,9 +1696,8 @@ class BuiltInFunction(BaseFunction):
         return f"<built-in function {self.name}>"
 
     def execute_print(self, exec_ctx):
-        statement = str(exec_ctx.symbol_table.get('value'))
-        print(statement)
-        return RTResult().success(statement)
+        print(str(exec_ctx.symbol_table.get('value')))
+        return RTResult().success(Number.null)
     execute_print.arg_names = ["value"]
 
     def execute_sin(self, exec_ctx):
@@ -2129,7 +2134,7 @@ class Interpreter:
             expr, should_return_null = node.else_case
             else_value = res.register(self.visit(expr, context))
             if res.should_return(): return res
-            return res.success(expr_value)
+            return res.success(else_value)
         
         return res.success(Number.null)
     
