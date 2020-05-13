@@ -1700,6 +1700,12 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number.null)
     execute_print.arg_names = ["value"]
 
+    def execute_say(self, exec_ctx):
+        os.system(f"say '{exec_ctx.symbol_table.get('value')}'")
+        print(str(exec_ctx.symbol_table.get('value')))
+        return RTResult().success(Number.null)
+    execute_say.arg_names = ["value"]
+
     def execute_sin(self, exec_ctx):
         smt = math.sin(float(str(exec_ctx.symbol_table.get('value'))))
         ans = Number(smt)
@@ -1903,6 +1909,8 @@ BuiltInFunction.pop         = BuiltInFunction("pop")
 BuiltInFunction.extend      = BuiltInFunction("extend")
 BuiltInFunction.len         = BuiltInFunction("len")
 BuiltInFunction.run      = BuiltInFunction("run")
+BuiltInFunction.say      = BuiltInFunction("say")
+
 
 class List(Value):
     def __init__(self, elements):
@@ -2281,6 +2289,8 @@ global_symbol_table.set("remove", BuiltInFunction.pop)
 global_symbol_table.set("join", BuiltInFunction.extend)
 global_symbol_table.set("length", BuiltInFunction.len)
 global_symbol_table.set("run", BuiltInFunction.run)
+global_symbol_table.set("say", BuiltInFunction.say)
+
 
 def run(fn, text):
         # Generate tokens
