@@ -139,6 +139,9 @@ KEYWORDS = [
     'while',
     'function',
     'end',
+    'continue',
+    'return',
+    'breakout',
 ]
 
 class Token:
