@@ -248,6 +248,13 @@ class TextConsole(tk.Text):
             
             if error:
                 error_as_string = error.as_string()
+                bear = """\n  ,~~.,''"'`'.~~.
+: {` .- _ -. '} ;
+ `:   O(_)O   ;'
+  ';  ._|_,  ;`
+   '`-.\_/,.'`\n"""
+
+                self.insert('insert', f'{bear}\n')
                 self.insert('insert', error_as_string)
                 self.insert('insert', '\n')
                 self.prompt()

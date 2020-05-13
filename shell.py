@@ -13,7 +13,15 @@ while True:
     if command == raw_text.lower():
         exit()
         
-    if error: print(error.as_string())
+    if error: 
+        bear = """\n,~~.,''"'`'.~~.
+: {` .- _ -. '} ;
+ `:   O(_)O   ;'
+  ';  ._|_,  ;`
+   '`-.\_/,.'`\n"""
+        print(bear)
+        print(error.as_string())
+       
     elif result: 
         if len(result.elements) == 1:
             print(repr(result.elements[0]))
