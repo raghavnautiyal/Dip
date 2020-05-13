@@ -3,7 +3,7 @@
 
 print("Enter the measure of the first angle:  ")
 
-variable t1 = input_integer() + print("Enter the measure of the first angle:  ")
+variable t1 = input_integer()
 
 print("Enter the measure of the first angle:  ") 
 
