@@ -51,8 +51,8 @@ class RTError(Error):
                 self.context = context
 
         def as_string(self):
-            result  = self.generate_traceback()
-            result += f'{self.error_name}: {self.details}\n'
+            result = f'{self.error_name}: {self.details}\n'
+            result += f'File {self.pos_start.fn}, line {self.pos_start.ln + 1}'
             result += '\n\n' + string_with_arrows(self.pos_start.ftxt, self.pos_start, self.pos_end)
             return result
 
@@ -1702,7 +1702,6 @@ class BuiltInFunction(BaseFunction):
 
     def execute_say(self, exec_ctx):
         os.system(f"say '{exec_ctx.symbol_table.get('value')}'")
-        print(str(exec_ctx.symbol_table.get('value')))
         return RTResult().success(Number.null)
     execute_say.arg_names = ["value"]
 
@@ -1731,20 +1730,20 @@ class BuiltInFunction(BaseFunction):
     execute_tan.arg_names = ["value"]
 
     def execute_input(self, exec_ctx):
-        text = input()
+        text = input(exec_ctx.symbol_table.get('value'))
         return RTResult().success(String(text))
-    execute_input.arg_names = []
+    execute_input.arg_names = ["value"]
 
     def execute_input_integer(self, exec_ctx):
         while True:
-            text = input()
+            text = input(f"{str(exec_ctx.symbol_table.get('value'))}")
             try:
                 number = int(text)
                 break
             except ValueError:
                 print(f"'{text}' must be an integer. Try again!")
         return RTResult().success(Number(number))
-    execute_input_integer.arg_names = []
+    execute_input_integer.arg_names = ["value"]
 
     def execute_clear(self, exec_ctx):
         os.system('cls' if os.name == 'nt' else 'clear') 

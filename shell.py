@@ -10,17 +10,25 @@ while True:
 
     command = 'exit'
 
+    bear = """\n .------.
+(        )    ..
+ `------'   .' /
+      O    /  ;
+        o i  OO
+         C    `-.
+         |    <-'
+         (  ,--.
+          V  \_)
+           \  :
+            `._\.
+\n"""
+
     if command == raw_text.lower():
         exit()
         
     if error: 
-        bear = """\n,~~.,''"'`'.~~.
-: {` .- _ -. '} ;
- `:   O(_)O   ;'
-  ';  ._|_,  ;`
-   '`-.\_/,.'`\n"""
-        print(bear)
         print(error.as_string())
+        print(bear)
        
     elif result: 
         if len(result.elements) == 1:

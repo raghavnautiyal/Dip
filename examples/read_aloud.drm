@@ -1,0 +1,7 @@
+# A dreamscript program to read aloud any text
+
+variable text = input("What do you want me to say?  ")
+
+variable num = input_integer("How many times? ")
+
+say(text * num)
