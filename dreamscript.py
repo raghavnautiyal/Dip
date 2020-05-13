@@ -1706,6 +1706,12 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number.null)
     execute_say.arg_names = ["value"]
 
+    def execute_root(self, exec_ctx):
+        root = math.sqrt(float(str(exec_ctx.symbol_table.get('value'))))
+        ans = Number(root)       
+        return RTResult().success(ans)
+    execute_root.arg_names = ["value"]
+
     def execute_sin(self, exec_ctx):
         smt = math.sin(float(str(exec_ctx.symbol_table.get('value'))))
         ans = Number(smt)
@@ -1910,6 +1916,7 @@ BuiltInFunction.extend      = BuiltInFunction("extend")
 BuiltInFunction.len         = BuiltInFunction("len")
 BuiltInFunction.run      = BuiltInFunction("run")
 BuiltInFunction.say      = BuiltInFunction("say")
+BuiltInFunction.root      = BuiltInFunction("root")
 
 
 class List(Value):
@@ -2290,6 +2297,7 @@ global_symbol_table.set("join", BuiltInFunction.extend)
 global_symbol_table.set("length", BuiltInFunction.len)
 global_symbol_table.set("run", BuiltInFunction.run)
 global_symbol_table.set("say", BuiltInFunction.say)
+global_symbol_table.set("root", BuiltInFunction.root)
 
 
 def run(fn, text):
