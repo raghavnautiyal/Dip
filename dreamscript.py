@@ -1576,6 +1576,18 @@ class String(Value):
         else:
             return None, Value.illegal_operation(self, other)
 
+    def get_comparison_eq(self, other):
+        if isinstance(other, String):
+            return String(str(self.value == other.value)).set_context(self.context), None
+        else:
+            return None, Value.illegal_operation(self, other)
+
+    def get_comparison_ne(self, other):
+        if isinstance(other, String):
+            return String(str(self.value != other.value)).set_context(self.context), None
+        else:
+            return None, Value.illegal_operation(self, other)
+
     def is_true(self):
         return len(self.value) > 0
 
@@ -1712,6 +1724,7 @@ class BuiltInFunction(BaseFunction):
         random_int = random.randint(listA, listB)
         return RTResult().success(Number(random_int))
     execute_randint.arg_names = ["argA", "argB"]
+
 
     def execute_root(self, exec_ctx):
         root = math.sqrt(float(str(exec_ctx.symbol_table.get('value'))))
