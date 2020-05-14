@@ -23,4 +23,5 @@ while answer == 1 then
     if answers == 7 then print("My reply is no")
 
     if answers == 8 then print("My sources say no")
+
 end

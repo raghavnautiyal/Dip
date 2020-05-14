@@ -1,5 +1,3 @@
 # test
 
-variable string = "h"
-
-if string == "h" then print("s")
+if "string" == "string" then print("You can compare strings!")
