@@ -1578,13 +1578,13 @@ class String(Value):
 
     def get_comparison_eq(self, other):
         if isinstance(other, String):
-            return String(str(self.value == other.value)).set_context(self.context), None
+            return Number(int(self.value == other.value)).set_context(self.context), None
         else:
             return None, Value.illegal_operation(self, other)
 
     def get_comparison_ne(self, other):
         if isinstance(other, String):
-            return String(str(self.value != other.value)).set_context(self.context), None
+            return Number(int(self.value != other.value)).set_context(self.context), None
         else:
             return None, Value.illegal_operation(self, other)
 
@@ -2297,8 +2297,8 @@ class Interpreter:
 
 global_symbol_table = SymbolTable()
 global_symbol_table.set("null", Number.null)
-global_symbol_table.set("true", Number.false)
-global_symbol_table.set("false", Number.true)
+global_symbol_table.set("false", Number.false)
+global_symbol_table.set("true", Number.true)
 global_symbol_table.set("pi", Number.math_pi)
 global_symbol_table.set("print", BuiltInFunction.print)
 global_symbol_table.set("sin", BuiltInFunction.sin)
