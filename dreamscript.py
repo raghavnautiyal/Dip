@@ -4,6 +4,7 @@ from string_with_arrows import *
 import string 
 import os
 import math
+import random
 
 #######################################
 # CONSTANTS
@@ -1705,6 +1706,13 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number.null)
     execute_say.arg_names = ["value"]
 
+    def execute_randint(self, exec_ctx):
+        listA = int(str(exec_ctx.symbol_table.get("argA")))
+        listB = int(str(exec_ctx.symbol_table.get("argB")))
+        random_int = random.randint(listA, listB)
+        return RTResult().success(Number(random_int))
+    execute_randint.arg_names = ["argA", "argB"]
+
     def execute_root(self, exec_ctx):
         root = math.sqrt(float(str(exec_ctx.symbol_table.get('value'))))
         ans = Number(root)       
@@ -1916,6 +1924,7 @@ BuiltInFunction.len         = BuiltInFunction("len")
 BuiltInFunction.run      = BuiltInFunction("run")
 BuiltInFunction.say      = BuiltInFunction("say")
 BuiltInFunction.root      = BuiltInFunction("root")
+BuiltInFunction.randint      = BuiltInFunction("randint")
 
 
 class List(Value):
@@ -2297,6 +2306,7 @@ global_symbol_table.set("length", BuiltInFunction.len)
 global_symbol_table.set("run", BuiltInFunction.run)
 global_symbol_table.set("say", BuiltInFunction.say)
 global_symbol_table.set("root", BuiltInFunction.root)
+global_symbol_table.set("random_int", BuiltInFunction.randint)
 
 
 def run(fn, text):

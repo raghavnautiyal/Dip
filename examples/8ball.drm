@@ -1,0 +1,26 @@
+# A dreamscript program to simulate a magic 8 ball
+
+variable answer = 1
+
+while answer == 1 then
+
+    variable question = input("What do you want to ask the magic 8 ball?    ")
+    
+    variable answers = random_int(1, 8)
+
+    if answers == 1 then print("It is certain")
+
+    if answers == 2 then print("Outlook good")
+
+    if answers == 3 then print("You may rely on it")
+
+    if answers == 4 then print("Ask again later")
+
+    if answers == 5 then print("Concentrate and ask again")
+
+    if answers == 6 then print("Reply hazy, try again")
+
+    if answers == 7 then print("My reply is no")
+
+    if answers == 8 then print("My sources say no")
+end

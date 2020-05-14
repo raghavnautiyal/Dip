@@ -1,0 +1,5 @@
+# test
+
+variable string = "h"
+
+if string == "h" then print("s")
