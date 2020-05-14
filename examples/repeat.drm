@@ -1,0 +1,5 @@
+# A simple dreamscript program to repeat what the user types in
+
+variable text = input("What do you want Mr. Moon to repeat? ")
+
+say(text)
