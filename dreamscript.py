@@ -2164,7 +2164,8 @@ class Interpreter:
             if condition_value.is_true():
                 expr_value = res.register(self.visit(expr, context))
                 if res.should_return(): return res
-                return res.success(expr_value)
+                return res.success(Number.null if should_return_null else expr_value)
+
         
         if node.else_case:
             expr, should_return_null = node.else_case
