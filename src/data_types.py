@@ -11,6 +11,8 @@ import math
 import random
 from position import *
 import dreamscript as ds
+from voice_recognition import * 
+
 
 class Value:
     def __init__(self):
@@ -493,6 +495,11 @@ class BuiltInFunction(BaseFunction):
         os.system('cls' if os.name == 'nt' else 'clear') 
         return RTResult().success(Number.null)
     execute_clear.arg_names = []
+
+    def execute_exitprompt(self, exec_ctx):
+        exit() 
+        return RTResult().success(Number.null)
+    execute_exitprompt.arg_names = []
     
     def execute_is_number(self, exec_ctx):
         is_number = isinstance(exec_ctx.symbol_table.get("value"), Number)
@@ -600,6 +607,12 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number(len(list_.elements)))
 
     execute_len.arg_names = ["list"]
+
+    def execute_lsn(self, exec_ctx):
+        command = listen_to_command()
+        return RTResult().success(String(command))
+
+    execute_lsn.arg_names = []
 
     def execute_run(self, exec_ctx):
         fn = exec_ctx.symbol_table.get("fn")

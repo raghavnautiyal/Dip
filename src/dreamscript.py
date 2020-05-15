@@ -37,6 +37,8 @@ BuiltInFunction.run      = BuiltInFunction("run")
 BuiltInFunction.say      = BuiltInFunction("say")
 BuiltInFunction.root      = BuiltInFunction("root")
 BuiltInFunction.randint      = BuiltInFunction("randint")
+BuiltInFunction.lsn      = BuiltInFunction("lsn")
+BuiltInFunction.exitprompt      = BuiltInFunction("exitprompt")
 
 
 #######################################
@@ -68,6 +70,8 @@ global_symbol_table.set("run", BuiltInFunction.run)
 global_symbol_table.set("say", BuiltInFunction.say)
 global_symbol_table.set("root", BuiltInFunction.root)
 global_symbol_table.set("random_int", BuiltInFunction.randint)
+global_symbol_table.set("listen", BuiltInFunction.lsn)
+global_symbol_table.set("exit", BuiltInFunction.exitprompt)
 
 
 def run(fn, text):

@@ -9,8 +9,6 @@ while True:
     if raw_text.strip() == "": continue
     result, error = run('<stdin>', raw_text)
 
-    command = 'exit'
-
     bear = """\n .------.
 (        )    ..
  `------'   .' /
@@ -24,9 +22,7 @@ while True:
             `._\.
 \n"""
 
-    if command == raw_text.lower():
-        exit()
-        
+
     if error: 
         print(error.as_string())
         print(bear)
