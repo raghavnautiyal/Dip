@@ -1,0 +1,13 @@
+# factorial
+
+function factorial(term)
+
+    variable fact = 1
+    if term >= 1 then
+        for i = 1 to term + 1 then
+            variable fact = fact * i
+        end
+    end
+    print(fact)
+
+end

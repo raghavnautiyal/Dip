@@ -1,0 +1,7 @@
+# Dreamscript program that uses the 'factorial' function from the stdlib
+
+run("stdlib/factorial.drm")
+
+variable term = input_integer("Which number's factorial would you like? ")
+
+factorial(term)
