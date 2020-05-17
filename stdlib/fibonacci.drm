@@ -1,0 +1,23 @@
+# Fibonnaci Function
+
+function fib(nterms) 
+
+    variable n1 = 0
+    variable n2 = 1
+    variable count = 0
+
+    if nterms <= 0 then print("Input a positive integer")
+    if nterms == 1 then 
+        print("Fibonnaci sequence upto" + " 1" + ":")
+        print(n1)
+    else
+        print("Fibonacci sequence:")
+        while count < nterms then
+            print(n1)
+            variable nth = n1 + n2
+            variable n1 = n2
+            variable n2 = nth
+            variable count = count + 1
+        end
+    end
+end
