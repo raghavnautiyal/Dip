@@ -523,6 +523,32 @@ class BuiltInFunction(BaseFunction):
         is_number = isinstance(exec_ctx.symbol_table.get("value"), BaseFunction)
         return RTResult().success(Number.true if is_number else Number.false)
     execute_is_function.arg_names = ["value"]
+
+    def execute_to_int(self, exec_ctx):
+        text = str(exec_ctx.symbol_table.get('value'))
+        try:
+            number = int(text)
+            return RTResult().success(Number(text))
+        except ValueError:
+            print(f"ValueError: Invalid literal for integer() with base 10: '{text}'")
+        return RTResult().success(Number.null)
+    execute_to_int.arg_names = ["value"]
+
+    def execute_to_float(self, exec_ctx):
+        text = str(exec_ctx.symbol_table.get('value'))
+        try:
+            number = float(text)
+            return RTResult().success(Number(text))
+        except ValueError:
+            print(f"ValueError: Invalid literal for decimal(): '{text}'")
+        return RTResult().success(Number.null)
+    execute_to_float.arg_names = ["value"]
+
+    def execute_to_string(self, exec_ctx):
+        is_number = str(exec_ctx.symbol_table.get("value"))
+        return RTResult().success(String(is_number))
+    execute_to_string.arg_names = ["value"]
+
     
     def execute_append(self, exec_ctx):
         list_ = exec_ctx.symbol_table.get("list")
@@ -572,7 +598,16 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(element)
             
     execute_pop.arg_names = ["list", "index"]
-    
+
+    def execute_reverse(self, exec_ctx):
+        value = str(exec_ctx.symbol_table.get("value"))
+        s1 = ''
+        for c in value:
+            s1 = c + s1  # appending chars in reverse order
+        return RTResult().success(String(s1))
+
+    execute_reverse.arg_names = ["value"]
+
     def execute_extend(self, exec_ctx):
         listA = exec_ctx.symbol_table.get("listA")
         listB = exec_ctx.symbol_table.get("listB")

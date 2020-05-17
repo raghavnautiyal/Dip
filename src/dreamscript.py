@@ -40,6 +40,10 @@ BuiltInFunction.randint      = BuiltInFunction("randint")
 BuiltInFunction.lsn      = BuiltInFunction("lsn")
 BuiltInFunction.exitprompt      = BuiltInFunction("exitprompt")
 BuiltInFunction.import_      = BuiltInFunction("import_")
+BuiltInFunction.to_int     = BuiltInFunction("to_int")
+BuiltInFunction.to_float    = BuiltInFunction("to_float")
+BuiltInFunction.to_string      = BuiltInFunction("to_string")
+BuiltInFunction.reverse      = BuiltInFunction("reverse")
 
 
 #######################################
@@ -74,6 +78,10 @@ global_symbol_table.set("random_int", BuiltInFunction.randint)
 global_symbol_table.set("listen", BuiltInFunction.lsn)
 global_symbol_table.set("exit", BuiltInFunction.exitprompt)
 global_symbol_table.set("include", BuiltInFunction.import_)
+global_symbol_table.set("integer", BuiltInFunction.to_int)
+global_symbol_table.set("decimal", BuiltInFunction.to_float)
+global_symbol_table.set("string", BuiltInFunction.to_string)
+global_symbol_table.set("reverse", BuiltInFunction.reverse)
 
 
 def run(fn, text):

@@ -33,7 +33,6 @@ function factorial(term)
         end
     end
     print(fact)
-
 end
 
 # Squares a value
