@@ -1,3 +1,0 @@
-# Squares a value
-
-function square(num) -> num ^ 2

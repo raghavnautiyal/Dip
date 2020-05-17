@@ -1,6 +1,6 @@
 # Squares some values using the stdlib functions
 
-run("stdlib/square.drm")
+run("stdlib/math.drm")
 
 variable value = input_integer("Which value do you want to square?  ")
 

@@ -1,4 +1,4 @@
-run("stdlib/fibonacci.drm")
+run("stdlib/math.drm")
 
 variable terms = input_integer("How many terms?   ")
 
