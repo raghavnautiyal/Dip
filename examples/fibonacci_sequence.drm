@@ -1,3 +1,5 @@
 run("stdlib/fibonacci.drm")
 
-fib(5)
+variable terms = input_integer("How many terms?   ")
+
+fib(terms)
