@@ -1,0 +1,7 @@
+# Squares some values using the stdlib functions
+
+run("stdlib/square.drm")
+
+variable value = input_integer("Which value do you want to square?  ")
+
+print(square(value))
