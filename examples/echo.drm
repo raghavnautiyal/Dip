@@ -1,0 +1,5 @@
+# A dreamscript program to say back what the user says
+
+variable command = listen()
+
+say(command)

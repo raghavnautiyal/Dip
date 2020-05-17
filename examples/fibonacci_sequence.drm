@@ -1,0 +1,3 @@
+run("stdlib/fibonacci.drm")
+
+fib(5)
