@@ -598,18 +598,22 @@ class BuiltInFunction(BaseFunction):
     execute_extend.arg_names = ["listA", "listB"]
 
     def execute_len(self, exec_ctx):
-        list_ = exec_ctx.symbol_table.get("list")
+        value = exec_ctx.symbol_table.get("value")
         
-        if not isinstance(list_, List):
+        if isinstance(value, List):
+            return RTResult().success(Number(len(value.elements)))
+        elif isinstance(value, String):
+            string = str(value)
+            length = len(string)
+            return RTResult().success(Number(length))
+        else:
             return RTResult().failure(RTError(
                 self.pos_start, self.pos_end,
-                "Argument must be list",
+                "Argument must be list or string",
                 exec_ctx
             ))
-            
-        return RTResult().success(Number(len(list_.elements)))
 
-    execute_len.arg_names = ["list"]
+    execute_len.arg_names = ["value"]
 
     def execute_lsn(self, exec_ctx):
         command = listen_to_command()
@@ -654,3 +658,41 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number.null)
 
     execute_run.arg_names = ["fn"]
+
+    def execute_import_(self, exec_ctx):
+        fn = exec_ctx.symbol_table.get("fn")
+        
+        if not isinstance(fn, String):
+            return RTResult().failure(RTError(
+                self.pos_start, self.pos_end,
+                "Second argument must be string",
+                exec_ctx
+            ))
+            
+        fn = fn.value
+        
+        try:
+            with open(fn, "r") as f:
+                script = f.read()
+                
+        except Exception as e:
+            return RTResult().failure(RTError(
+                self.pos_start, self.pos_end,
+                f"Failed to load script \"{fn}\"\n" + str(e),
+                exec_ctx
+                ))
+        
+        _, error = ds.run(fn, script)
+        
+        if error:
+            return RTResult().failure(RTError(
+                self.pos_start, self.pos_end,
+                f"Failed to finish executing script \"{fn}\"\n" +
+                error.as_string(),
+                exec_ctx
+                
+            ))
+        
+        return RTResult().success(Number.null)
+
+    execute_import_.arg_names = ["fn"]
