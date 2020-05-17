@@ -12,7 +12,7 @@ import random
 from position import *
 import dreamscript as ds
 from voice_recognition import * 
-
+from Dreamshell import *
 
 class Value:
     def __init__(self):
@@ -435,7 +435,8 @@ class BuiltInFunction(BaseFunction):
 
     def execute_print(self, exec_ctx):
         print(str(exec_ctx.symbol_table.get('value')))
-        return RTResult().success(Number.null)
+        toprint = str(exec_ctx.symbol_table.get('value'))
+        return RTResult().success(String(toprint))
     execute_print.arg_names = ["value"]
 
     def execute_say(self, exec_ctx):
@@ -476,13 +477,15 @@ class BuiltInFunction(BaseFunction):
     execute_tan.arg_names = ["value"]
 
     def execute_input(self, exec_ctx):
-        text = input(exec_ctx.symbol_table.get('value'))
-        return RTResult().success(String(text))
+        text = input(str(exec_ctx.symbol_table.get('value')))
+        ans = String(text)
+        return RTResult().success(ans)
+        TextConsole.eval_current.self.insert('insert', f'{ans}')
     execute_input.arg_names = ["value"]
 
     def execute_input_integer(self, exec_ctx):
         while True:
-            text = input(f"{str(exec_ctx.symbol_table.get('value'))}")
+            text = input(str(exec_ctx.symbol_table.get('value')))
             try:
                 number = int(text)
                 break
@@ -534,7 +537,7 @@ class BuiltInFunction(BaseFunction):
             ))
             
         list_.elements.append(value)
-        return RTResult().success(Number.null)
+        return RTResult().success(list_)
     execute_append.arg_names = ["list", "value"]
         
     def execute_pop(self, exec_ctx):
@@ -590,7 +593,7 @@ class BuiltInFunction(BaseFunction):
             ))
             
         listA.elements.extend(listB.elements)
-        return RTResult().success(listA.elements.extend(listB.elements))
+        return RTResult().success(listA.elements)
         
     execute_extend.arg_names = ["listA", "listB"]
 
