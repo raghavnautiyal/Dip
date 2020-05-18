@@ -540,7 +540,7 @@ class BuiltInFunction(BaseFunction):
             number = float(text)
             return RTResult().success(Number(text))
         except ValueError:
-            print(f"ValueError: Could not convert string to float: '{text}'")
+            print(f"ValueError: Could not convert string to decimal: '{text}'")
         return RTResult().success(Number.null)
     execute_to_float.arg_names = ["value"]
 
