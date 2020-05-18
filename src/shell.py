@@ -1,7 +1,7 @@
 from dreamscript import *
 from parser import *
 
-print("\nDreamscript Beta (Version 0.1)\n")
+print("\nDreamscript Beta\n")
 print("Type in 'exit' to exit the prompt\n")
 
 while True:
