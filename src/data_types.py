@@ -612,23 +612,19 @@ class BuiltInFunction(BaseFunction):
         listA = exec_ctx.symbol_table.get("listA")
         listB = exec_ctx.symbol_table.get("listB")
         
-        if not isinstance(listA, List):
+        if isinstance(listA, List) and isinstance (listB, List):
+            listA.elements.extend(listB.elements)
+            return RTResult().success(listA.elements)
+        elif isinstance(listA, String) and isinstance (listB, String):
+            x = str(listA) + str(listB)
+            return RTResult().success(String(x))
+        else:
             return RTResult().failure(RTError(
                 self.pos_start, self.pos_end,
-                 "First argument must be list",
-                 exec_ctx
-            ))
-            
-        if not isinstance(listB, List):
-            return RTResult().failure(RTError(
-                self.pos_start, self.pos_end,
-                "Second argument must be list",
+                "Both arguments must be list or string",
                 exec_ctx
                 
             ))
-            
-        listA.elements.extend(listB.elements)
-        return RTResult().success(listA.elements)
         
     execute_extend.arg_names = ["listA", "listB"]
 
