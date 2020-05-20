@@ -11,7 +11,7 @@ import math
 import random
 from position import *
 import dreamscript as ds
-from voice_recognition import * 
+import speech_recognition as sr
 from Dreamshell import *
 
 class Value:
@@ -645,12 +645,6 @@ class BuiltInFunction(BaseFunction):
             ))
 
     execute_len.arg_names = ["value"]
-
-    def execute_lsn(self, exec_ctx):
-        command = listen_to_command()
-        return RTResult().success(String(command))
-
-    execute_lsn.arg_names = []
 
     def execute_run(self, exec_ctx):
         fn = exec_ctx.symbol_table.get("fn")
