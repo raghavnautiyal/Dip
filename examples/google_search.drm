@@ -1,0 +1,7 @@
+# A dreamscript program to search google for whatever query you may have!
+
+include("stdlib/browser.drm")
+
+variable search_term = input("What do you want to search google for?    ")
+
+search(search_term)
