@@ -1,5 +1,6 @@
 import dreamscript
 import tkinter as tk
+from tkinter import Tk, scrolledtext, Menu, filedialog, messagebox
 import sys
 import re
 from code import InteractiveConsole
@@ -50,6 +51,9 @@ class TextConsole(tk.Text):
         self.bind('<BackSpace>', self.on_backspace)
         self.bind('<Control-c>', self.on_ctrl_c)
         self.bind('<<Paste>>', self.on_paste)
+
+        
+
 
     def on_ctrl_c(self, event):
         """Copy selected code, removing prompts first"""
@@ -286,8 +290,85 @@ class TextConsole(tk.Text):
 
 
 if __name__ == '__main__':
+    
     root = tk.Tk()
     console = TextConsole(root)
+    textArea = scrolledtext.ScrolledText(width = 500, height = 500)
+    
+    def newFile():
+        textArea = scrolledtext.ScrolledText(width = 500, height = 500)
+        if len(textArea.get('1.0', 'end' + '-1c')) > 0:
+            if messagebox.askyesno("Save", "Do you wish to save?"):
+                saveFile()
+        newWindow = tk.Toplevel(scrolledtext.ScrolledText(width = 500, height = 500))
+        newWindow.title("Dreamscript Editor")
+        newWindow.geometry("500x500")  
+        newFile.newtextArea = scrolledtext.ScrolledText(newWindow, width = 500, height = 500)
+        newFile.newtextArea.pack()
+        menu = Menu(root)
+        root.config(menu=menu)
+        fileMenu = Menu(menu)
+    
+        menu.add_cascade(label="File", menu = fileMenu)
+        fileMenu.add_command(label="New File", command=newFile)
+        fileMenu.add_command(label="Open...", command=openFile)
+        fileMenu.add_command(label="Save", command=saveFile)
+        fileMenu.add_separator()
+        fileMenu.add_command(label="Quit", command=exitRoot)
+
+        helpMenu = Menu(menu)
+        menu.add_cascade(label="Help", menu = helpMenu)
+
+        abtmenu = Menu(menu)
+        menu.add_cascade(label="About",  menu = abtmenu)
+        root.mainloop()
+
+
+    def openFile():
+        file = filedialog.askopenfile(parent=root, title='Select a .drm file', filetypes=(("Dreamscript File", "*.drm"),))
+
+        if file != None:
+            contents = file.read()
+            newFile.newtextArea.insert('1.0', contents)
+            file.close()
+
+    def openFilefromprompt():
+        file = filedialog.askopenfile(parent=root, title='Select a .drm file', filetypes=(("Dreamscript File", "*.drm"),))
+        newFile()
+        if file != None:
+            contents = file.read()
+            newFile.newtextArea.insert('1.0', contents)
+            file.close()
+
+    def saveFile():
+        file = filedialog.asksaveasfile(mode='w')
+
+        if file != None:
+            data = newFile.newtextArea.get('1.0', 'end' + '-1c')
+            file.write(data)
+            file.close()
+
+    def exitRoot():
+        if tk.messagebox.askyesno("Quit", "Are you sure you want to quit?"):
+            root.destroy()
+
+    menu = Menu(root)
+    root.config(menu=menu)
+    fileMenu = Menu(menu)
+    menu.add_cascade(label="File", menu = fileMenu)
+    fileMenu.add_command(label="New File", command=newFile)
+    fileMenu.add_command(label="Open...", command=openFilefromprompt)
+    fileMenu.add_separator()
+    fileMenu.add_command(label="Quit", command=exitRoot)
+
+    helpMenu = Menu(menu)
+    menu.add_cascade(label="Help", menu = helpMenu)
+
+    abtmenu = Menu(menu)
+    menu.add_cascade(label="About",  menu = abtmenu)
+    #menu.add_cascade(label="About",  command = about)
     root.title("Dreamscript Beta (Version 0.1) - Shell")
     console.pack(fill='both', expand=True)
     root.mainloop()
+
+    
