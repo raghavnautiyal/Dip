@@ -43,6 +43,7 @@ BuiltInFunction.to_int     = BuiltInFunction("to_int")
 BuiltInFunction.to_float    = BuiltInFunction("to_float")
 BuiltInFunction.to_string      = BuiltInFunction("to_string")
 BuiltInFunction.reverse      = BuiltInFunction("reverse")
+BuiltInFunction.opentab      = BuiltInFunction("opentab")
 
 
 #######################################
@@ -80,6 +81,7 @@ global_symbol_table.set("integer", BuiltInFunction.to_int)
 global_symbol_table.set("decimal", BuiltInFunction.to_float)
 global_symbol_table.set("string", BuiltInFunction.to_string)
 global_symbol_table.set("reverse", BuiltInFunction.reverse)
+global_symbol_table.set("open", BuiltInFunction.opentab)
 
 
 def run(fn, text):

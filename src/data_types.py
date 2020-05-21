@@ -13,6 +13,8 @@ from position import *
 import dreamscript as ds
 import speech_recognition as sr
 from Dreamshell import *
+import webbrowser as wb
+
 
 class Value:
     def __init__(self):
@@ -607,6 +609,12 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(String(s1))
 
     execute_reverse.arg_names = ["value"]
+
+    def execute_opentab(self, exec_ctx):
+        value = str(exec_ctx.symbol_table.get("value"))
+        wb.open("https://" + value, new=2)
+        return RTResult().success(Number.null)
+    execute_opentab.arg_names = ["value"]
 
     def execute_extend(self, exec_ctx):
         listA = exec_ctx.symbol_table.get("listA")
