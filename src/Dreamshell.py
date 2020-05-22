@@ -363,7 +363,7 @@ class Statusbar:
 
 class DreamText: 
 
-    def __init__(self, master):
+    def __init__(self, master): 
         master.title("Untitled - Dreamshell")
         master.geometry("1200x700")     
 
