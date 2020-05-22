@@ -1,4 +1,5 @@
-import dreamscript
+import dreamscript as ds
+import data_types as dttt
 import tkinter as tk
 from tkinter import Tk, scrolledtext, Menu, filedialog, messagebox, END
 import sys
@@ -6,6 +7,8 @@ import re
 from code import InteractiveConsole
 from contextlib import redirect_stderr, redirect_stdout
 from io import StringIO
+from runtime_result import *
+from error import *
 
 
 class History(list):
@@ -18,6 +21,7 @@ class History(list):
 
 class TextConsole(tk.Text):
     def __init__(self, master, **kw):
+        font_specs = ("courier", 14)
         kw.setdefault('width', 83)
         kw.setdefault('height', 43)
         kw.setdefault('wrap', 'word')
@@ -248,7 +252,7 @@ class TextConsole(tk.Text):
 
             dreamscripttext.tag_config('error', background="yellow", foreground="red")
             
-            result, error = dreamscript.run('<Dreamscript Shell>', cmds)
+            result, error = ds.run('<Dreamscript Shell>', cmds)
             
             if error:
                 error_as_string = error.as_string()
@@ -309,6 +313,9 @@ class Menubar:
         file_dropdown.add_command(label="Save As",
                                   accelerator="Ctrl+Shift+S",
                                   command=parent.save_as)
+        file_dropdown.add_command(label="Run",
+                                  accelerator="Ctrl+R",
+                                  command=parent.run)
         file_dropdown.add_separator()
         file_dropdown.add_command(label="Exit",
                                   command=parent.master.destroy)
@@ -338,7 +345,7 @@ class Statusbar:
 
     def __init__(self, parent):
 
-        font_specs = ("courier", 12)
+        font_specs = ("courier", 12,)
         
         self.status = tk.StringVar()
         self.status.set("Dreamshell - Beta")
@@ -408,6 +415,27 @@ class DreamText:
                 print(e)
         else:
             self.save_as()
+    
+    def run(self, *args):
+    
+        script = ''
+        try:
+            if self.filename:
+                with open(self.filename, "r") as f:
+                    script = f.read()
+        except Exception as e:
+            box_title = "Error"
+            box_message = "Failed to finish executing script. It seems like the script doesn't exist\n"
+            messagebox.showinfo(box_title, box_message)
+
+        dttt._, dttt.error = ds.run(self.filename, script)
+
+        if dttt.error:
+            box_title = "Error"
+            box_message = 'Failed to finish executing script. To get a detailed error message, type "run(script path)" in the prompt\n'
+            messagebox.showinfo(box_title, box_message)
+
+        
 
     def save_as(self, *args):
         try:
@@ -429,6 +457,7 @@ class DreamText:
         self.textarea.bind('<Control-o>', self.open_file)
         self.textarea.bind('<Control-s>', self.save)
         self.textarea.bind('<Control-S>', self.save_as)
+        self.textarea.bind('<Control-S>', self.run)
         self.textarea.bind('<Key>', self.statusbar.update_status)
         
 

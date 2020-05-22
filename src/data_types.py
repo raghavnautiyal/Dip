@@ -14,7 +14,7 @@ import dreamscript as ds
 import speech_recognition as sr
 from Dreamshell import *
 import webbrowser as wb
-
+from Dreamshell import DreamText
 
 class Value:
     def __init__(self):
@@ -436,9 +436,7 @@ class BuiltInFunction(BaseFunction):
         return f"<built-in function {self.name}>"
 
     def execute_print(self, exec_ctx):
-        print(str(exec_ctx.symbol_table.get('value')))
-        toprint = str(exec_ctx.symbol_table.get('value'))
-        return RTResult().success(String(toprint))
+        return RTResult().success(String(str(exec_ctx.symbol_table.get('value'))))
     execute_print.arg_names = ["value"]
 
     def execute_say(self, exec_ctx):
@@ -663,9 +661,8 @@ class BuiltInFunction(BaseFunction):
                 "Second argument must be string",
                 exec_ctx
             ))
-            
-        fn = fn.value
         
+        fn = fn.value
         try:
             with open(fn, "r") as f:
                 script = f.read()
@@ -676,7 +673,7 @@ class BuiltInFunction(BaseFunction):
                 f"Failed to load script \"{fn}\"\n" + str(e),
                 exec_ctx
                 ))
-        
+    
         _, error = ds.run(fn, script)
         
         if error:
@@ -693,7 +690,7 @@ class BuiltInFunction(BaseFunction):
     execute_run.arg_names = ["fn"]
 
     def execute_import_(self, exec_ctx):
-        fn = exec_ctx.symbol_table.get("fn")
+        String(fn = exec_ctx.symbol_table.get("fn"))
         
         if not isinstance(fn, String):
             return RTResult().failure(RTError(
@@ -725,7 +722,7 @@ class BuiltInFunction(BaseFunction):
                 exec_ctx
                 
             ))
-        
+
         return RTResult().success(Number.null)
 
     execute_import_.arg_names = ["fn"]
