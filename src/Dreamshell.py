@@ -365,7 +365,7 @@ class DreamText:
 
     def __init__(self, master):
         master.title("Untitled - Dreamshell")
-        master.geometry("1200x700")
+        master.geometry("1200x700")     
 
         font_specs = ("courier", 14)
 
