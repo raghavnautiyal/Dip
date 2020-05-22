@@ -361,7 +361,7 @@ class Statusbar:
             self.status.set("Dreamshell - Beta")
 
 
-class DreamText:
+class DreamText: 
 
     def __init__(self, master):
         master.title("Untitled - Dreamshell")
