@@ -480,11 +480,10 @@ class BuiltInFunction(BaseFunction):
 
     def execute_input(self, exec_ctx):
         text = str(exec_ctx.symbol_table.get('value'))
-        message = tk.Text(master=TextConsole.root)
-        TextConsole.insert('1.0', f'{input(text)}')
         ans = String(text)
+        TextConsole().insert('1.0', f'{x}')
+        TextConsole().insert('insert', f'{ans}')
         return RTResult().success(ans)
-        TextConsole.insert('insert', f'{ans}')
     execute_input.arg_names = ["value"]
 
     def execute_input_integer(self, exec_ctx):

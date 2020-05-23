@@ -424,6 +424,7 @@ class DreamText:
         dttt._, dttt.error = ds.run(self.filename, script)
 
         if dttt.error:
+            TextConsole().insert('1.0', f'')
             box_title = "Error"
             box_message = 'Failed to finish executing script. To get a detailed error message, type "run(/your/script/path)" in the prompt\n'
             messagebox.showinfo(box_title, box_message)
