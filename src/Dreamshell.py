@@ -10,6 +10,7 @@ from io import StringIO
 from runtime_result import *
 from error import *
 
+global ineedyoutowork 
 
 class History(list):
     def __getitem__(self, index):
@@ -20,7 +21,7 @@ class History(list):
 
 
 class TextConsole(tk.Text):
-    def __init__(self, master, **kw):
+    def __init__(self, master=None, **kw):
         font_specs = ("courier", 14)
         kw.setdefault('width', 83)
         kw.setdefault('height', 43)
@@ -246,12 +247,6 @@ class TextConsole(tk.Text):
             if cmds == 'exit':
                 exit()
 
-            dreamscripttext = tk.Text(root)
-
-            dreamscripttext.tag_add("error", "5.0", "6.0");
-
-            dreamscripttext.tag_config('error', background="yellow", foreground="red")
-            
             result, error = ds.run('<Dreamscript Shell>', cmds)
             
             if error:
@@ -276,14 +271,9 @@ class TextConsole(tk.Text):
                 self.prompt()
 
             elif result:
-                if len(result.elements) == 1:
-                    self.insert('insert', repr(result.elements[0]))
-                    self.insert('insert', '\n')
-                    self.prompt()
-                else:
-                    self.insert('insert', repr(result))
-                    self.insert('insert', '\n')
-                    self.prompt()
+                for i in result.elements:
+                    self.insert('insert', f'{i}\n')
+                self.prompt()
             else:
                 self.prompt()
 
@@ -291,6 +281,9 @@ class TextConsole(tk.Text):
         else:
             self.insert('insert', '\n')
             self.prompt()
+        
+        
+
 
 class Menubar:
 
@@ -364,24 +357,25 @@ class Statusbar:
 class DreamText: 
 
     def __init__(self, master): 
-        master.title("Untitled - Dreamshell")
-        master.geometry("1200x700")     
+        if master:
+            master.title("Untitled - Dreamshell")
+            master.geometry("1200x700")     
 
-        font_specs = ("courier", 14)
+            font_specs = ("courier", 14)
 
-        self.master = master
-        self.filename = None
+            self.master = master
+            self.filename = None
 
-        self.textarea = tk.Text(master, font=font_specs)
-        self.scroll = tk.Scrollbar(master, command=self.textarea.yview)
-        self.textarea.configure(yscrollcommand=self.scroll.set)
-        self.textarea.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-        self.scroll.pack(side=tk.RIGHT, fill=tk.Y)
+            self.textarea = tk.Text(master, font=font_specs)
+            self.scroll = tk.Scrollbar(master, command=self.textarea.yview)
+            self.textarea.configure(yscrollcommand=self.scroll.set)
+            self.textarea.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+            self.scroll.pack(side=tk.RIGHT, fill=tk.Y)
 
-        self.menubar = Menubar(self)
-        self.statusbar = Statusbar(self)
+            self.menubar = Menubar(self)
+            self.statusbar = Statusbar(self)
 
-        self.bind_shortcuts()
+            self.bind_shortcuts()
 
     def set_window_title(self, name=None):
         if name:
@@ -396,7 +390,7 @@ class DreamText:
 
     def open_file(self, *args):
         self.filename = filedialog.askopenfilename(
-            defaultextension=".txt",
+            defaultextension=".drm",
             filetypes=[("Dreamscript Files", "*.drm")])
         if self.filename:
             self.textarea.delete(1.0, tk.END)
@@ -416,8 +410,7 @@ class DreamText:
         else:
             self.save_as()
     
-    def run(self, *args):
-    
+    def run(self):
         script = ''
         try:
             if self.filename:
@@ -432,16 +425,20 @@ class DreamText:
 
         if dttt.error:
             box_title = "Error"
-            box_message = 'Failed to finish executing script. To get a detailed error message, type "run(script path)" in the prompt\n'
+            box_message = 'Failed to finish executing script. To get a detailed error message, type "run(/your/script/path)" in the prompt\n'
+            messagebox.showinfo(box_title, box_message)
+        elif dttt._:
+            box_title = "Result"
+            box_message = f'Script Result: {dttt._}. To get a detailed error message, type "run(/your/script/path)" in the prompt\n'
             messagebox.showinfo(box_title, box_message)
 
-        
+
 
     def save_as(self, *args):
         try:
             new_file = filedialog.asksaveasfilename(
                 initialfile="Untitled.drm",
-                defaultextension=".txt",
+                defaultextension=".drm",
                 filetypes=[("Dreamscript Files", "*.drm")])
             textarea_content = self.textarea.get(1.0, tk.END)
             with open(new_file, "w") as f:
@@ -463,11 +460,9 @@ class DreamText:
 
 
 if __name__ == '__main__':
-    
     root = tk.Tk()
     console = TextConsole(root)
     dt = DreamText(root)
     console.pack(fill='both', expand=True)
     root.mainloop()
 
-    

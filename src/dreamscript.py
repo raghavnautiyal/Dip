@@ -44,6 +44,7 @@ BuiltInFunction.to_float    = BuiltInFunction("to_float")
 BuiltInFunction.to_string      = BuiltInFunction("to_string")
 BuiltInFunction.reverse      = BuiltInFunction("reverse")
 BuiltInFunction.opentab      = BuiltInFunction("opentab")
+BuiltInFunction.getpath      = BuiltInFunction("getpath")
 
 
 #######################################
@@ -82,7 +83,7 @@ global_symbol_table.set("decimal", BuiltInFunction.to_float)
 global_symbol_table.set("string", BuiltInFunction.to_string)
 global_symbol_table.set("reverse", BuiltInFunction.reverse)
 global_symbol_table.set("open", BuiltInFunction.opentab)
-
+global_symbol_table.set("getpath", BuiltInFunction.getpath)
 
 def run(fn, text):
         # Generate tokens

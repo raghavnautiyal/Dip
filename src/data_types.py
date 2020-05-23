@@ -14,7 +14,8 @@ import dreamscript as ds
 import speech_recognition as sr
 from Dreamshell import *
 import webbrowser as wb
-from Dreamshell import DreamText
+from tkinter import INSERT
+from Dreamshell import *
 
 class Value:
     def __init__(self):
@@ -436,6 +437,7 @@ class BuiltInFunction(BaseFunction):
         return f"<built-in function {self.name}>"
 
     def execute_print(self, exec_ctx):
+        print(String(str(exec_ctx.symbol_table.get('value'))))
         return RTResult().success(String(str(exec_ctx.symbol_table.get('value'))))
     execute_print.arg_names = ["value"]
 
@@ -453,8 +455,8 @@ class BuiltInFunction(BaseFunction):
 
 
     def execute_root(self, exec_ctx):
-        root = math.sqrt(float(str(exec_ctx.symbol_table.get('value'))))
-        ans = Number(root)       
+        roott = math.sqrt(float(str(exec_ctx.symbol_table.get('value'))))
+        ans = Number(roott)       
         return RTResult().success(ans)
     execute_root.arg_names = ["value"]
 
@@ -477,10 +479,12 @@ class BuiltInFunction(BaseFunction):
     execute_tan.arg_names = ["value"]
 
     def execute_input(self, exec_ctx):
-        text = input(str(exec_ctx.symbol_table.get('value')))
+        text = str(exec_ctx.symbol_table.get('value'))
+        message = tk.Text(master=TextConsole.root)
+        TextConsole.insert('1.0', f'{input(text)}')
         ans = String(text)
         return RTResult().success(ans)
-        TextConsole.eval_current.self.insert('insert', f'{ans}')
+        TextConsole.insert('insert', f'{ans}')
     execute_input.arg_names = ["value"]
 
     def execute_input_integer(self, exec_ctx):
@@ -531,6 +535,12 @@ class BuiltInFunction(BaseFunction):
             return RTResult().success(Number(text))
         except ValueError:
             print(f"ValueError: Invalid literal for integer() with base 10: '{text}'")
+            return RTResult().failure(RTError(
+                self.pos_start, self.pos_end,
+                f"ValueError: Invalid literal for integer() with base 10: '{text}'",
+                exec_ctx
+                
+            ))
         return RTResult().success(Number.null)
     execute_to_int.arg_names = ["value"]
 
@@ -541,6 +551,12 @@ class BuiltInFunction(BaseFunction):
             return RTResult().success(Number(text))
         except ValueError:
             print(f"ValueError: Could not convert string to decimal: '{text}'")
+            return RTResult().failure(RTError(
+                self.pos_start, self.pos_end,
+                f"ValueError: Could not convert string to decimal: '{text}'",
+                exec_ctx
+                
+            ))
         return RTResult().success(Number.null)
     execute_to_float.arg_names = ["value"]
 
@@ -614,6 +630,11 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number.null)
     execute_opentab.arg_names = ["value"]
 
+    def execute_getpath(self, exec_ctx=None):
+        path = DreamText().filename
+        return RTResult().success(String(path))
+    execute_getpath.arg_names = []
+
     def execute_extend(self, exec_ctx):
         listA = exec_ctx.symbol_table.get("listA")
         listB = exec_ctx.symbol_table.get("listB")
@@ -654,7 +675,7 @@ class BuiltInFunction(BaseFunction):
 
     def execute_run(self, exec_ctx):
         fn = exec_ctx.symbol_table.get("fn")
-        
+
         if not isinstance(fn, String):
             return RTResult().failure(RTError(
                 self.pos_start, self.pos_end,
@@ -672,7 +693,7 @@ class BuiltInFunction(BaseFunction):
                 self.pos_start, self.pos_end,
                 f"Failed to load script \"{fn}\"\n" + str(e),
                 exec_ctx
-                ))
+            ))
     
         _, error = ds.run(fn, script)
         
@@ -684,8 +705,9 @@ class BuiltInFunction(BaseFunction):
                 exec_ctx
                 
             ))
-        
-        return RTResult().success(Number.null)
+
+    
+        return RTResult().success(_.elements)
 
     execute_run.arg_names = ["fn"]
 
