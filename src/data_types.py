@@ -443,7 +443,8 @@ class BuiltInFunction(BaseFunction):
 
     def execute_print(self, exec_ctx):
         print(String(str(exec_ctx.symbol_table.get('value'))))
-        return RTResult().success(String(str(exec_ctx.symbol_table.get('value'))))
+        x = String(str(exec_ctx.symbol_table.get('value')))
+        return RTResult().success(x)
     execute_print.arg_names = ["value"]
 
     def execute_say(self, exec_ctx):
@@ -503,12 +504,24 @@ class BuiltInFunction(BaseFunction):
 
     def execute_input_integer(self, exec_ctx):
         while True:
-            text = input(str(exec_ctx.symbol_table.get('value')))
+            p = str(exec_ctx.symbol_table.get('value'))
+            master = tk.Tk()
+            master.title("Integer Input")
+            tk.Label(master, text=f"{p}").grid(row=0)
+        
+            e1 = tk.Entry(master)
+        
+            e1.grid(row=0, column=1)
+
+            tk.Button(master, text='Enter', command=master.quit).grid(row=3, column=0,  sticky=tk.W, pady=4)
+            tk.mainloop()
+            text = str(e1.get())
             t = str(exec_ctx.symbol_table.get('value'))
             try:
                 number = int(text)
                 break
             except ValueError:
+                tk.Label(master, text=f"'{text}' must be an integer. Try again!").grid(row=2)
                 print(f"'{text}' must be an integer. Try again!")
         return RTResult().success(Number(number))
     execute_input_integer.arg_names = ["value"]
