@@ -8,6 +8,8 @@ while answer == 1 then
     
     variable answers = random_int(1, 8)
 
+    if question == "exit" then exit()
+
     if answers == 1 then print("It is certain")
 
     if answers == 2 then print("Outlook good")
