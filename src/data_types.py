@@ -15,7 +15,12 @@ import speech_recognition as sr
 from Dreamshell import *
 import webbrowser as wb
 from tkinter import INSERT
+import tkinter as tk
 from Dreamshell import *
+import time as time
+
+def changedinput(something):
+        return something
 
 class Value:
     def __init__(self):
@@ -478,17 +483,28 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(ans)
     execute_tan.arg_names = ["value"]
 
+    
+
     def execute_input(self, exec_ctx):
-        text = str(exec_ctx.symbol_table.get('value'))
-        ans = String(text)
-        TextConsole().insert('1.0', f'{x}')
-        TextConsole().insert('insert', f'{ans}')
-        return RTResult().success(ans)
+        p = str(exec_ctx.symbol_table.get('value'))
+        
+        master = tk.Tk()
+        master.title("Input")
+        tk.Label(master, text=f"{p}").grid(row=0)
+        
+        e1 = tk.Entry(master)
+        
+        e1.grid(row=0, column=1)
+
+        tk.Button(master, text='Enter', command=master.quit).grid(row=3, column=0,  sticky=tk.W, pady=4)
+        tk.mainloop()
+        return RTResult().success(String(e1.get()))
     execute_input.arg_names = ["value"]
 
     def execute_input_integer(self, exec_ctx):
         while True:
             text = input(str(exec_ctx.symbol_table.get('value')))
+            t = str(exec_ctx.symbol_table.get('value'))
             try:
                 number = int(text)
                 break
@@ -711,7 +727,7 @@ class BuiltInFunction(BaseFunction):
     execute_run.arg_names = ["fn"]
 
     def execute_import_(self, exec_ctx):
-        String(fn = exec_ctx.symbol_table.get("fn"))
+        fn = String(fn = exec_ctx.symbol_table.get("fn"))
         
         if not isinstance(fn, String):
             return RTResult().failure(RTError(

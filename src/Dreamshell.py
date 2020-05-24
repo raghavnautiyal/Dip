@@ -9,8 +9,7 @@ from contextlib import redirect_stderr, redirect_stdout
 from io import StringIO
 from runtime_result import *
 from error import *
-
-global ineedyoutowork 
+import runfile as rf 
 
 class History(list):
     def __getitem__(self, index):
@@ -25,6 +24,7 @@ class TextConsole(tk.Text):
         font_specs = ("courier", 14)
         kw.setdefault('width', 83)
         kw.setdefault('height', 43)
+        kw.setdefault('font', font_specs)
         kw.setdefault('wrap', 'word')
         kw.setdefault('prompt1', 'Dreamscript> ')
         kw.setdefault('prompt2', '... ')
@@ -295,19 +295,19 @@ class Menubar:
 
         file_dropdown = tk.Menu(menubar, font=font_specs, tearoff=0)
         file_dropdown.add_command(label="New File",
-                                  accelerator="Ctrl+N",
+                                  accelerator="Cmd+N",
                                   command=parent.new_file)
         file_dropdown.add_command(label="Open File",
-                                  accelerator="Ctrl+O",
+                                  accelerator="Cmd+O",
                                   command=parent.open_file)
         file_dropdown.add_command(label="Save",
-                                  accelerator="Ctrl+S",
+                                  accelerator="Cmd+S",
                                   command=parent.save)
         file_dropdown.add_command(label="Save As",
-                                  accelerator="Ctrl+Shift+S",
+                                  accelerator="Cmd+Shift+S",
                                   command=parent.save_as)
         file_dropdown.add_command(label="Run",
-                                  accelerator="Ctrl+R",
+                                  accelerator="Cmd+R",
                                   command=parent.run)
         file_dropdown.add_separator()
         file_dropdown.add_command(label="Exit",
@@ -417,24 +417,37 @@ class DreamText:
                 with open(self.filename, "r") as f:
                     script = f.read()
         except Exception as e:
-            box_title = "Error"
-            box_message = "Failed to finish executing script. It seems like the script doesn't exist\n"
-            messagebox.showinfo(box_title, box_message)
+            rf.inserter(f"Seems like the script '{self.filename}' doesn't exist")
 
         dttt._, dttt.error = ds.run(self.filename, script)
 
         if dttt.error:
-            TextConsole().insert('1.0', f'')
-            box_title = "Error"
-            box_message = 'Failed to finish executing script. To get a detailed error message, type "run(/your/script/path)" in the prompt\n'
-            messagebox.showinfo(box_title, box_message)
+            error_as_string = dttt.error.as_string()
+            bear = """\n .------.
+(        )    ..
+ `------'   .' /
+      O    /  ;
+        o i  OO
+         C    `-.
+         |    <-'
+         (  ,--.
+          V  \_)
+           \  :
+            `._\.
+\n"""
+
+              
+            TextConsole().insert('1.0', error_as_string)
+            TextConsole().insert('1.0', f'{bear}\n')
+            TextConsole().insert('1.0', '\n')
+            TextConsole().prompt()
         elif dttt._:
-            box_title = "Result"
-            box_message = f'Script Result: {dttt._}. To get a detailed error message, type "run(/your/script/path)" in the prompt\n'
-            messagebox.showinfo(box_title, box_message)
-
-
-
+            for i in dttt._.elements:
+                TextConsole().insert('1.0', f'{i}\n')
+                TextConsole().prompt()
+        else:
+            TextConsole().prompt()
+          
     def save_as(self, *args):
         try:
             new_file = filedialog.asksaveasfilename(
@@ -451,11 +464,11 @@ class DreamText:
             print(e)
 
     def bind_shortcuts(self):
-        self.textarea.bind('<Control-n>', self.new_file)
-        self.textarea.bind('<Control-o>', self.open_file)
-        self.textarea.bind('<Control-s>', self.save)
-        self.textarea.bind('<Control-S>', self.save_as)
-        self.textarea.bind('<Control-S>', self.run)
+        self.textarea.bind('<Command-n>', self.new_file)
+        self.textarea.bind('<Command-o>', self.open_file)
+        self.textarea.bind('<Command-s>', self.save)
+        self.textarea.bind('<Command-S>', self.save_as)
+        self.textarea.bind('<Command-R>', self.run)
         self.textarea.bind('<Key>', self.statusbar.update_status)
         
 
