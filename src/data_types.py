@@ -16,7 +16,7 @@ from Dreamshell import *
 import webbrowser as wb
 from tkinter import INSERT
 import tkinter as tk
-from Dreamshell import *
+import Dreamshell as dsh
 import time as time
 
 def changedinput(something):
@@ -442,9 +442,10 @@ class BuiltInFunction(BaseFunction):
         return f"<built-in function {self.name}>"
 
     def execute_print(self, exec_ctx):
-        print(String(str(exec_ctx.symbol_table.get('value'))))
         x = String(str(exec_ctx.symbol_table.get('value')))
-        return RTResult().success(x)
+        dsh.toprint.append(1)
+        dsh.printret.append(x)
+        return RTResult().success(Number.null)
     execute_print.arg_names = ["value"]
 
     def execute_say(self, exec_ctx):
@@ -483,8 +484,6 @@ class BuiltInFunction(BaseFunction):
         ans = Number(smt)
         return RTResult().success(ans)
     execute_tan.arg_names = ["value"]
-
-    
 
     def execute_input(self, exec_ctx):
         p = str(exec_ctx.symbol_table.get('value'))
@@ -735,7 +734,7 @@ class BuiltInFunction(BaseFunction):
             ))
 
     
-        return RTResult().success(_.elements)
+        return RTResult().success(_)
 
     execute_run.arg_names = ["fn"]
 

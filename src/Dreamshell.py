@@ -11,6 +11,8 @@ from runtime_result import *
 from error import *
 import runfile as rf 
 
+
+
 class History(list):
     def __getitem__(self, index):
         try:
@@ -32,6 +34,7 @@ class TextConsole(tk.Text):
         self._prompt1 = kw.pop('prompt1')
         self._prompt2 = kw.pop('prompt2')
         tk.Text.__init__(self, master, **kw)
+        
         # --- history
         self.history = History()
         self._hist_item = 0
@@ -247,6 +250,8 @@ class TextConsole(tk.Text):
             if cmds == 'exit':
                 exit()
 
+            if cmds == 'hi':
+                (root).insert('insert','hi myself raju first time in the gulf')
             result, error = ds.run('<Dreamscript Shell>', cmds)
             
             if error:
@@ -437,16 +442,16 @@ class DreamText:
 \n"""
 
               
-            TextConsole().insert('1.0', error_as_string)
-            TextConsole().insert('1.0', f'{bear}\n')
-            TextConsole().insert('1.0', '\n')
-            TextConsole().prompt()
+            TextConsole(tk.Text).insert('insert', error_as_string)
+            TextConsole(root).insert('insert', f'{bear}\n')
+            TextConsole(root).insert('insert', '\n')
+            TextConsole(root).prompt()
         elif dttt._:
             for i in dttt._.elements:
-                TextConsole().insert('1.0', f'{i}\n')
-                TextConsole().prompt()
+                TextConsole(root).insert('insert', f'{i}\n')
+                TextConsole(root).prompt()
         else:
-            TextConsole().prompt()
+            TextConsole(root).prompt()
           
     def save_as(self, *args):
         try:
@@ -470,13 +475,26 @@ class DreamText:
         self.textarea.bind('<Command-S>', self.save_as)
         self.textarea.bind('<Command-R>', self.run)
         self.textarea.bind('<Key>', self.statusbar.update_status)
-        
 
+
+printret = []
+toprint = []
 
 if __name__ == '__main__':
     root = tk.Tk()
     console = TextConsole(root)
+    print(toprint)
+    print(printret)
+    if 1 in toprint:
+        console.insert('insert',f'\n{printret[0]}\n')
+        print("yay")
+        console.prompt()
+        printret = []
+        toprint = []
     dt = DreamText(root)
     console.pack(fill='both', expand=True)
+    print('hi myself raju first time in the gulf')
+    print(toprint)
+    print(printret)
     root.mainloop()
-
+    
