@@ -12,7 +12,6 @@ from error import *
 import runfile as rf 
 
 
-
 class History(list):
     def __getitem__(self, index):
         try:
@@ -250,8 +249,7 @@ class TextConsole(tk.Text):
             if cmds == 'exit':
                 exit()
 
-            if cmds == 'hi':
-                (root).insert('insert','hi myself raju first time in the gulf')
+            
             result, error = ds.run('<Dreamscript Shell>', cmds)
             
             if error:
@@ -276,9 +274,14 @@ class TextConsole(tk.Text):
                 self.prompt()
 
             elif result:
-                for i in result.elements:
-                    self.insert('insert', f'{i}\n')
-                self.prompt()
+                print(result)
+                print(result.elements)
+                if result.elements == 1:
+                    self.insert(result[0])
+                else:
+                    for i in result.elements:
+                        self.insert('insert', f'{i}\n')
+                    self.prompt()
             else:
                 self.prompt()
 
@@ -416,42 +419,9 @@ class DreamText:
             self.save_as()
     
     def run(self):
-        script = ''
-        try:
-            if self.filename:
-                with open(self.filename, "r") as f:
-                    script = f.read()
-        except Exception as e:
-            rf.inserter(f"Seems like the script '{self.filename}' doesn't exist")
-
-        dttt._, dttt.error = ds.run(self.filename, script)
-
-        if dttt.error:
-            error_as_string = dttt.error.as_string()
-            bear = """\n .------.
-(        )    ..
- `------'   .' /
-      O    /  ;
-        o i  OO
-         C    `-.
-         |    <-'
-         (  ,--.
-          V  \_)
-           \  :
-            `._\.
-\n"""
-
-              
-            TextConsole(tk.Text).insert('insert', error_as_string)
-            TextConsole(root).insert('insert', f'{bear}\n')
-            TextConsole(root).insert('insert', '\n')
-            TextConsole(root).prompt()
-        elif dttt._:
-            for i in dttt._.elements:
-                TextConsole(root).insert('insert', f'{i}\n')
-                TextConsole(root).prompt()
-        else:
-            TextConsole(root).prompt()
+        main = Main()
+        main.runvar = True
+        print(main.runvar)
           
     def save_as(self, *args):
         try:
@@ -472,29 +442,90 @@ class DreamText:
         self.textarea.bind('<Command-n>', self.new_file)
         self.textarea.bind('<Command-o>', self.open_file)
         self.textarea.bind('<Command-s>', self.save)
-        self.textarea.bind('<Command-S>', self.save_as)
+        self.textarea.bind('<Shift-Command-S>', self.save_as)
         self.textarea.bind('<Command-R>', self.run)
         self.textarea.bind('<Key>', self.statusbar.update_status)
 
 
-printret = []
-toprint = []
+class Main:
+    def __init__(self):
+        self.printret = []
+        self.toprint = False
+        self.runvar = False
+    def changevars(self, changedprintret, changedtoprint, changedrunvar):
+        self.printret.append(changedprintret)
+        self.toprint = changedtoprint
+        self.runvar = changedrunvar
+    def show(self):
+        return self.printret, self.toprint, self.runvar
+
+
+        
+def main():
+        root = tk.Tk()
+        root.config(background="red")
+        console = TextConsole(root)
+        dt = DreamText(root)
+        console.pack(fill='both', expand=True)
+        console.insert('input', 'print("j")')
+        main = Main()
+        print(main.show())
+        print("^ - yeh hai")
+        if main.printret != []: 
+            print("something's wrong")
+        
+        while main.printret != []: 
+            print("ayyyyy")
+            print("F")
+            console.insert('insert',f'\n{main.printret}\n')
+            print("yay")
+            console.prompt()
+            print(main.toprint)
+            print(main.printret)
+        while main.runvar == True:
+                print("rrf")
+                script = ''
+                try:
+                    if self.filename:
+                        with open(self.filename, "r") as f:
+                            script = f.read()
+                except Exception as e:
+                    insert(f"Seems like the script '{self.filename}' doesn't exist")
+
+                dttt._, dttt.error = ds.run(self.filename, script)
+
+                if dttt.error:
+                    error_as_string = dttt.error.as_string()
+                    bear = """\n .------.
+        (        )    ..
+        `------'   .' /
+            O    /  ;
+                o i  OO
+                C    `-.
+                |    <-'
+                (  ,--.
+                V  \_)
+                \  :
+                    `._\.
+        \n"""
+
+                    
+                    console.insert('insert', error_as_string)
+                    console.insert('insert', f'{bear}\n')
+                    console.insert('insert', '\n')
+                    console.prompt()
+                elif dttt._:
+                    for i in dttt._.elements:
+                        console.insert('insert', f'{i}\n')
+                        console.prompt()
+                else:
+                    console.prompt()
+                main.runvar = []
+        root.mainloop()
+    
+
 
 if __name__ == '__main__':
-    root = tk.Tk()
-    console = TextConsole(root)
-    print(toprint)
-    print(printret)
-    if 1 in toprint:
-        console.insert('insert',f'\n{printret[0]}\n')
-        print("yay")
-        console.prompt()
-        printret = []
-        toprint = []
-    dt = DreamText(root)
-    console.pack(fill='both', expand=True)
-    print('hi myself raju first time in the gulf')
-    print(toprint)
-    print(printret)
-    root.mainloop()
-    
+    main()
+
+

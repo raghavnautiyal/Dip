@@ -25,5 +25,5 @@ function map(elements, func)
 end
 
 for i = 0 to 5 then
-	print(join(map(["splendid", "disastrous"], lyfy), ", "))
+	say(join(map(["splendid", "disastrous"], lyfy), ", "))
 end

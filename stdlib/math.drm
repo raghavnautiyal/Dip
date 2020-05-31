@@ -32,7 +32,7 @@ function factorial(term)
             variable fact = fact * i
         end
     end
-    print(fact)
+    say(fact)
 end
 
 # Squares a value

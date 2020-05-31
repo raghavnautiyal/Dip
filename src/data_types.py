@@ -16,8 +16,9 @@ from Dreamshell import *
 import webbrowser as wb
 from tkinter import INSERT
 import tkinter as tk
-import Dreamshell as dsh
 import time as time
+from tkinter import simpledialog
+
 
 def changedinput(something):
         return something
@@ -441,11 +442,12 @@ class BuiltInFunction(BaseFunction):
     def __repr__(self):
         return f"<built-in function {self.name}>"
 
+    
     def execute_print(self, exec_ctx):
-        x = String(str(exec_ctx.symbol_table.get('value')))
-        dsh.toprint.append(1)
-        dsh.printret.append(x)
-        return RTResult().success(Number.null)
+        textconsole = TextConsole()
+        textconsole.insert('insert', "ok")
+        print(str(exec_ctx.symbol_table.get('value')))
+        return RTResult().success(str(exec_ctx.symbol_table.get('value')))
     execute_print.arg_names = ["value"]
 
     def execute_say(self, exec_ctx):
@@ -487,42 +489,22 @@ class BuiltInFunction(BaseFunction):
 
     def execute_input(self, exec_ctx):
         p = str(exec_ctx.symbol_table.get('value'))
-        
         master = tk.Tk()
-        master.title("Input")
-        tk.Label(master, text=f"{p}").grid(row=0)
-        
-        e1 = tk.Entry(master)
-        
-        e1.grid(row=0, column=1)
+    
+        answer = simpledialog.askstring("Input", f"{p}",
+                                parent=master)
 
-        tk.Button(master, text='Enter', command=master.quit).grid(row=3, column=0,  sticky=tk.W, pady=4)
-        tk.mainloop()
-        return RTResult().success(String(e1.get()))
+        return RTResult().success(String(answer))
+
+        
     execute_input.arg_names = ["value"]
 
     def execute_input_integer(self, exec_ctx):
-        while True:
-            p = str(exec_ctx.symbol_table.get('value'))
-            master = tk.Tk()
-            master.title("Integer Input")
-            tk.Label(master, text=f"{p}").grid(row=0)
+        p = str(exec_ctx.symbol_table.get('value'))
         
-            e1 = tk.Entry(master)
-        
-            e1.grid(row=0, column=1)
-
-            tk.Button(master, text='Enter', command=master.quit).grid(row=3, column=0,  sticky=tk.W, pady=4)
-            tk.mainloop()
-            text = str(e1.get())
-            t = str(exec_ctx.symbol_table.get('value'))
-            try:
-                number = int(text)
-                break
-            except ValueError:
-                tk.Label(master, text=f"'{text}' must be an integer. Try again!").grid(row=2)
-                print(f"'{text}' must be an integer. Try again!")
-        return RTResult().success(Number(number))
+        answer = simpledialog.askinteger("Input Integer", f"{p}",
+                                parent=tk.Tk())
+        return RTResult().success(Number(answer))
     execute_input_integer.arg_names = ["value"]
 
     def execute_clear(self, exec_ctx):
@@ -709,19 +691,19 @@ class BuiltInFunction(BaseFunction):
                 "Second argument must be string",
                 exec_ctx
             ))
-        
+
         fn = fn.value
+
         try:
             with open(fn, "r") as f:
                 script = f.read()
-                
         except Exception as e:
             return RTResult().failure(RTError(
                 self.pos_start, self.pos_end,
                 f"Failed to load script \"{fn}\"\n" + str(e),
                 exec_ctx
             ))
-    
+
         _, error = ds.run(fn, script)
         
         if error:
@@ -730,37 +712,33 @@ class BuiltInFunction(BaseFunction):
                 f"Failed to finish executing script \"{fn}\"\n" +
                 error.as_string(),
                 exec_ctx
-                
             ))
 
-    
-        return RTResult().success(_)
-
+        return RTResult().success(Number.null)
     execute_run.arg_names = ["fn"]
 
     def execute_import_(self, exec_ctx):
-        fn = String(fn = exec_ctx.symbol_table.get("fn"))
-        
+        fn = exec_ctx.symbol_table.get("fn")
+
         if not isinstance(fn, String):
             return RTResult().failure(RTError(
                 self.pos_start, self.pos_end,
                 "Second argument must be string",
                 exec_ctx
             ))
-            
+
         fn = fn.value
-        
+
         try:
             with open(fn, "r") as f:
                 script = f.read()
-                
         except Exception as e:
             return RTResult().failure(RTError(
                 self.pos_start, self.pos_end,
                 f"Failed to load script \"{fn}\"\n" + str(e),
                 exec_ctx
-                ))
-        
+            ))
+
         _, error = ds.run(fn, script)
         
         if error:
@@ -769,7 +747,6 @@ class BuiltInFunction(BaseFunction):
                 f"Failed to finish executing script \"{fn}\"\n" +
                 error.as_string(),
                 exec_ctx
-                
             ))
 
         return RTResult().success(Number.null)

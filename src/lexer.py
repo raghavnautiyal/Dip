@@ -195,7 +195,6 @@ class Lexer:
             escape_characters = {
                 'n': '\n',
                 't': '\t',
-                'b': '\b'
             }
 
             while self.current_char != None and (self.current_char != '"' or escape_character):

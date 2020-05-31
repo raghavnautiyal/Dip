@@ -4,4 +4,6 @@ run("stdlib/math.drm")
 
 variable value = input_integer("Which value do you want to square?  ")
 
-print(square(value))
+variable squared_value = string(square(value))
+
+print(squared_value)

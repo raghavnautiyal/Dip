@@ -602,7 +602,7 @@ class Parser:
                 return res.failure(InvalidSyntaxError(
                     self.current_tok.pos_start, self.current_tok.pos_end,
                     "Expected an indentifier here!"
-                ))
+            ))
 
             var_name = self.current_tok
             res.register_advancement()

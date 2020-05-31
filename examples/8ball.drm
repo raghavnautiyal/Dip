@@ -1,14 +1,13 @@
 # A dreamscript program to simulate a magic 8 ball
 
-variable answer = 1
 
-while answer == 1 then
+while 1 == 1 then
 
     variable question = input("What do you want to ask the magic 8 ball?    ")
     
     variable answers = random_int(1, 8)
 
-    if question == "exit" then exit()
+    if question == "exit" then breakout
 
     if answers == 1 then print("It is certain")
 
