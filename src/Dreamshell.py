@@ -1,5 +1,4 @@
 import dreamscript as ds
-import data_types as dttt
 import tkinter as tk
 from tkinter import Tk, scrolledtext, Menu, filedialog, messagebox, END
 import sys
@@ -10,7 +9,10 @@ from io import StringIO
 from runtime_result import *
 from error import *
 import runfile as rf 
+import data_types as dt
 
+printretttt = ": )"
+babu = 0
 
 class History(list):
     def __getitem__(self, index):
@@ -59,9 +61,7 @@ class TextConsole(tk.Text):
         self.bind('<Control-c>', self.on_ctrl_c)
         self.bind('<<Paste>>', self.on_paste)
 
-        
-
-
+   
     def on_ctrl_c(self, event):
         """Copy selected code, removing prompts first"""
         sel = self.tag_ranges('sel')
@@ -235,8 +235,11 @@ class TextConsole(tk.Text):
                 self.insert('insert', line)
                 self.mark_set('input', input_index)
         self.see('end')
+    
 
+    
     def eval_current(self, auto_indent=False):
+        
         """Evaluate code"""
         index = self.index('input')
         lines = self.get('input', 'insert lineend').splitlines() # commands to execute
@@ -249,10 +252,10 @@ class TextConsole(tk.Text):
             if cmds == 'exit':
                 exit()
 
-            
             result, error = ds.run('<Dreamscript Shell>', cmds)
             
             if error:
+                self.insert('insert', '\n')
                 error_as_string = error.as_string()
                 bear = """\n .------.
 (        )    ..
@@ -273,25 +276,29 @@ class TextConsole(tk.Text):
                 self.insert('insert', '\n')
                 self.prompt()
 
-            elif result:
-                print(result)
-                print(result.elements)
-                if result.elements == 1:
-                    self.insert(result[0])
-                else:
+            else:
+
+                if dt.veryimp == 1:
+                    for i in dt.toprint:
+                        self.insert('insert', f'{i}\n')
+                    dt.toprint = []
+                    self.prompt()
+                    dt.veryimp = 0
+                
+                elif result:
                     for i in result.elements:
                         self.insert('insert', f'{i}\n')
                     self.prompt()
-            else:
-                self.prompt()
-
-                
+    
         else:
             self.insert('insert', '\n')
             self.prompt()
+            
         
         
 
+
+    
 
 class Menubar:
 
@@ -364,7 +371,7 @@ class Statusbar:
 
 class DreamText: 
 
-    def __init__(self, master): 
+    def __init__(self, master=None): 
         if master:
             master.title("Untitled - Dreamshell")
             master.geometry("1200x700")     
@@ -442,9 +449,10 @@ class DreamText:
         self.textarea.bind('<Command-n>', self.new_file)
         self.textarea.bind('<Command-o>', self.open_file)
         self.textarea.bind('<Command-s>', self.save)
-        self.textarea.bind('<Shift-Command-S>', self.save_as)
         self.textarea.bind('<Command-R>', self.run)
         self.textarea.bind('<Key>', self.statusbar.update_status)
+    
+    
 
 
 class Main:
@@ -460,72 +468,15 @@ class Main:
         return self.printret, self.toprint, self.runvar
 
 
-        
-def main():
+
+def maindef():
         root = tk.Tk()
-        root.config(background="red")
         console = TextConsole(root)
         dt = DreamText(root)
         console.pack(fill='both', expand=True)
-        console.insert('input', 'print("j")')
         main = Main()
-        print(main.show())
-        print("^ - yeh hai")
-        if main.printret != []: 
-            print("something's wrong")
         
-        while main.printret != []: 
-            print("ayyyyy")
-            print("F")
-            console.insert('insert',f'\n{main.printret}\n')
-            print("yay")
-            console.prompt()
-            print(main.toprint)
-            print(main.printret)
-        while main.runvar == True:
-                print("rrf")
-                script = ''
-                try:
-                    if self.filename:
-                        with open(self.filename, "r") as f:
-                            script = f.read()
-                except Exception as e:
-                    insert(f"Seems like the script '{self.filename}' doesn't exist")
-
-                dttt._, dttt.error = ds.run(self.filename, script)
-
-                if dttt.error:
-                    error_as_string = dttt.error.as_string()
-                    bear = """\n .------.
-        (        )    ..
-        `------'   .' /
-            O    /  ;
-                o i  OO
-                C    `-.
-                |    <-'
-                (  ,--.
-                V  \_)
-                \  :
-                    `._\.
-        \n"""
-
-                    
-                    console.insert('insert', error_as_string)
-                    console.insert('insert', f'{bear}\n')
-                    console.insert('insert', '\n')
-                    console.prompt()
-                elif dttt._:
-                    for i in dttt._.elements:
-                        console.insert('insert', f'{i}\n')
-                        console.prompt()
-                else:
-                    console.prompt()
-                main.runvar = []
-        root.mainloop()
-    
-
+        root.mainloop()  
 
 if __name__ == '__main__':
-    main()
-
-
+    maindef()

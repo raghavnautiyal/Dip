@@ -13,15 +13,42 @@ from position import *
 import dreamscript as ds
 import speech_recognition as sr
 from Dreamshell import *
+import Dreamshell as dshell
 import webbrowser as wb
 from tkinter import INSERT
 import tkinter as tk
 import time as time
 from tkinter import simpledialog
+import config
+
+veryimp = 0
+toprint = []
+tp = ""
+
+    
+def reset():
+    global toprint        
+    global veryimp   
+    global tp
+
+    veryimp = 0
+    toprint = []
+    tp = ""
+    return toprint, veryimp, tp
 
 
-def changedinput(something):
-        return something
+def helper(string):
+    global tp
+    tp = string
+    return tp
+
+def globallyChange():
+    global toprint        
+    global veryimp   
+    global tp      
+    toprint.append(tp) 
+    veryimp = 1
+    return veryimp, toprint
 
 class Value:
     def __init__(self):
@@ -250,6 +277,19 @@ class String(Value):
         else:
             return None, Value.illegal_operation(self, other)
 
+    def dived_by(self, other):
+        if isinstance(other, Number):
+            try:
+                return String(self.value[other.value]).set_context(self.context), None
+            except:
+                return None, RTError(
+                other.pos_start, other.pos_end,
+                'Element at this index could not be retrieved from string because index is out of bounds',
+                self.context
+                )
+        else:
+            return None, Value.illegal_operation(self, other)
+
     def get_comparison_eq(self, other):
         if isinstance(other, String):
             return Number(int(self.value == other.value)).set_context(self.context), None
@@ -438,17 +478,17 @@ class BuiltInFunction(BaseFunction):
         copy.set_context(self.context)
         copy.set_pos(self.pos_start, self.pos_end)
         return copy
-        
+    
     def __repr__(self):
         return f"<built-in function {self.name}>"
-
     
     def execute_print(self, exec_ctx):
-        textconsole = TextConsole()
-        textconsole.insert('insert', "ok")
+        helper(str(exec_ctx.symbol_table.get('value')))
+        globallyChange()
         print(str(exec_ctx.symbol_table.get('value')))
-        return RTResult().success(str(exec_ctx.symbol_table.get('value')))
+        return RTResult().success("")
     execute_print.arg_names = ["value"]
+
 
     def execute_say(self, exec_ctx):
         os.system(f"say '{exec_ctx.symbol_table.get('value')}'")
@@ -489,10 +529,11 @@ class BuiltInFunction(BaseFunction):
 
     def execute_input(self, exec_ctx):
         p = str(exec_ctx.symbol_table.get('value'))
-        master = tk.Tk()
-    
-        answer = simpledialog.askstring("Input", f"{p}",
-                                parent=master)
+
+        answer = input(p)
+        
+        #answer = simpledialog.askstring("Input", f"{p}",
+                                #parent=tk.Tk())
 
         return RTResult().success(String(answer))
 
@@ -501,9 +542,11 @@ class BuiltInFunction(BaseFunction):
 
     def execute_input_integer(self, exec_ctx):
         p = str(exec_ctx.symbol_table.get('value'))
-        
-        answer = simpledialog.askinteger("Input Integer", f"{p}",
-                                parent=tk.Tk())
+
+        answer = input(p)
+
+        #answer = simpledialog.askinteger("Input Integer", f"{p}",
+                                #parent=tk.Tk())
         return RTResult().success(Number(answer))
     execute_input_integer.arg_names = ["value"]
 
@@ -536,6 +579,12 @@ class BuiltInFunction(BaseFunction):
         is_number = isinstance(exec_ctx.symbol_table.get("value"), BaseFunction)
         return RTResult().success(Number.true if is_number else Number.false)
     execute_is_function.arg_names = ["value"]
+
+    def execute_wait(self, exec_ctx):
+        wait = str(exec_ctx.symbol_table.get("value"))
+        time.sleep(int(wait))
+        return RTResult().success(Number.null)
+    execute_wait.arg_names = ["value"]
 
     def execute_to_int(self, exec_ctx):
         text = str(exec_ctx.symbol_table.get('value'))
@@ -640,8 +689,9 @@ class BuiltInFunction(BaseFunction):
     execute_opentab.arg_names = ["value"]
 
     def execute_getpath(self, exec_ctx=None):
-        path = DreamText().filename
-        return RTResult().success(String(path))
+        text = dshell.DreamText()
+        text.path()
+        return RTResult().success(String(text.path()))
     execute_getpath.arg_names = []
 
     def execute_extend(self, exec_ctx):
@@ -717,7 +767,7 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number.null)
     execute_run.arg_names = ["fn"]
 
-    def execute_import_(self, exec_ctx):
+    def execute_use(self, exec_ctx):
         fn = exec_ctx.symbol_table.get("fn")
 
         if not isinstance(fn, String):
@@ -751,4 +801,5 @@ class BuiltInFunction(BaseFunction):
 
         return RTResult().success(Number.null)
 
-    execute_import_.arg_names = ["fn"]
+    execute_use.arg_names = ["fn"]
+

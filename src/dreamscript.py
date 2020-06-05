@@ -38,13 +38,14 @@ BuiltInFunction.say      = BuiltInFunction("say")
 BuiltInFunction.root      = BuiltInFunction("root")
 BuiltInFunction.randint      = BuiltInFunction("randint")
 BuiltInFunction.exitprompt      = BuiltInFunction("exitprompt")
-BuiltInFunction.import_      = BuiltInFunction("import_")
+BuiltInFunction.use      = BuiltInFunction("use")
 BuiltInFunction.to_int     = BuiltInFunction("to_int")
 BuiltInFunction.to_float    = BuiltInFunction("to_float")
 BuiltInFunction.to_string      = BuiltInFunction("to_string")
 BuiltInFunction.reverse      = BuiltInFunction("reverse")
 BuiltInFunction.opentab      = BuiltInFunction("opentab")
 BuiltInFunction.getpath      = BuiltInFunction("getpath")
+BuiltInFunction.wait      = BuiltInFunction("wait")
 
 
 #######################################
@@ -77,13 +78,14 @@ global_symbol_table.set("say", BuiltInFunction.say)
 global_symbol_table.set("root", BuiltInFunction.root)
 global_symbol_table.set("random_int", BuiltInFunction.randint)
 global_symbol_table.set("exit", BuiltInFunction.exitprompt)
-global_symbol_table.set("include", BuiltInFunction.import_)
+global_symbol_table.set("use", BuiltInFunction.use)
 global_symbol_table.set("integer", BuiltInFunction.to_int)
 global_symbol_table.set("decimal", BuiltInFunction.to_float)
 global_symbol_table.set("string", BuiltInFunction.to_string)
 global_symbol_table.set("reverse", BuiltInFunction.reverse)
 global_symbol_table.set("open", BuiltInFunction.opentab)
 global_symbol_table.set("getpath", BuiltInFunction.getpath)
+global_symbol_table.set("wait", BuiltInFunction.wait)
 
 def run(fn, text):
         # Generate tokens

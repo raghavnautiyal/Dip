@@ -1,5 +1,4 @@
-from dreamscript import *
-from parser import *
+from trash import *
 
 print("\nDreamscript Beta\n")
 print("Type in 'exit' to exit the prompt\n")
@@ -31,5 +30,6 @@ while True:
         if len(result.elements) == 1:
             print(repr(result.elements[0]))
         else:
-            for i in result.elements:
-                print(repr(i))
+            print(repr(result))
+
+            

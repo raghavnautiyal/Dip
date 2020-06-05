@@ -190,8 +190,7 @@ class Interpreter:
             elements.append(value)
 
         return res.success(
-            dt.Number.null if node.should_return_null else
-            dt.List(elements).set_context(context).set_pos(node.pos_start, node.pos_end)        
+            ""        
         )
         
     def visit_WhileNode(self, node, context):
@@ -216,8 +215,7 @@ class Interpreter:
             elements.append(value)
             
         return res.success(
-            dt.Number.null if node.should_return_null else
-            dt.List(elements).set_context(context).set_pos(node.pos_start, node.pos_end)
+           ""
         )
 
 
