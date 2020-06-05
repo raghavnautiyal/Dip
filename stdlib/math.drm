@@ -38,3 +38,9 @@ end
 # Squares a value
 
 function square(num) -> num ^ 2
+
+# Checks if a number is even or odd
+
+function odd_or_even(number)
+    if number % 2 == 0 then print("even") else print("odd") 
+end

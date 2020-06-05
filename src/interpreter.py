@@ -75,6 +75,7 @@ class Interpreter:
 
     def visit_BinOpNode(self, node, context):
         res = RTResult()
+        
         left = res.register(self.visit(node.left_node, context))
         if res.should_return(): return res
         right = res.register(self.visit(node.right_node, context))
@@ -90,6 +91,8 @@ class Interpreter:
             result, error = left.dived_by(right)
         elif node.op_tok.type == lxr.TT_POWER:
             result, error = left.raiseto(right)
+        elif node.op_tok.type == lxr.TT_MODULUS:
+            result, error = left.modulise(right)
         elif node.op_tok.type == lxr.TT_EE:
             result, error = left.get_comparison_eq(right)
         elif node.op_tok.type == lxr.TT_NE:
@@ -116,10 +119,8 @@ class Interpreter:
         res = RTResult()
         number = res.register(self.visit(node.node, context))
         if res.should_return(): return res
-        
-
+    
         error = None
-
 
         if node.op_tok.type == lxr.TT_MINUS:
             number, error = number.multed_by(dt.Number(-1))
@@ -189,9 +190,7 @@ class Interpreter:
 
             elements.append(value)
 
-        return res.success(
-            ""        
-        )
+        return res.success("")
         
     def visit_WhileNode(self, node, context):
         res = RTResult()
@@ -214,9 +213,7 @@ class Interpreter:
 
             elements.append(value)
             
-        return res.success(
-           ""
-        )
+        return res.success("")
 
 
     def visit_FuncDefNode(self, node, context):

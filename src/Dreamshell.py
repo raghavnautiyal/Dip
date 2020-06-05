@@ -277,7 +277,6 @@ class TextConsole(tk.Text):
                 self.prompt()
 
             else:
-
                 if dt.veryimp == 1:
                     for i in dt.toprint:
                         self.insert('insert', f'{i}\n')
