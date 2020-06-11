@@ -6,8 +6,10 @@ variable angle2 = input_integer("Enter the measure of the second angle:  ")
 
 variable angle3 = input_integer("Enter the measure of the third angle:  ") 
 
-if angle1 + angle2 + angle3 != 180 then 
- print("Sorry, not a valid triangle :(") 
+variable sum = angle1 + angle2 + angle3
+
+if sum == 180 then 
+ print("Yay, it's a valid triangle :)")
 else
-    print("Yay, it's a valid triangle :)")
+    print("Sorry, not a valid triangle :(") 
 end

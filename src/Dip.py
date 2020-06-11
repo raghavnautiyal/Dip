@@ -10,13 +10,7 @@ from runtime_result import *
 from error import *
 import runfile as rf 
 import data_types as dt
-from tkinter import simpledialog
-
 import os
-
-insert = 0 
-toinsert = []
-tp = ""
 
 printretttt = ": )"
 babu = 0
@@ -38,7 +32,7 @@ class TextConsole(tk.Text):
         kw.setdefault('wrap', 'word')
         kw.setdefault('prompt1', 'Dip> ')
         kw.setdefault('prompt2', '... ')
-        banner = kw.pop('banner', 'Dip Version 0.1 - Beta\nType "help", "copyright", "credits" or "about" for more information.\n\n')
+        banner = kw.pop('banner', "Dip Beta (Version 0.1)\nType in 'exit' to exit the shell\n\n")
         self._prompt1 = kw.pop('prompt1')
         self._prompt2 = kw.pop('prompt2')
         tk.Text.__init__(self, master, **kw)
@@ -256,39 +250,11 @@ class TextConsole(tk.Text):
             lines = [lines[0].rstrip()] + [line[len(self._prompt2):].rstrip() for line in lines[1:]]
             cmds = '\n'.join(lines)
             self.insert('insert', '\n')
-
-            result, error = ds.run("<Dip's Development Environment>", cmds)
-
-            if cmds == "copyright":
-                self.insert('insert',"Copyright (c) Raghav Nautiyal. All Rights Reserved.\n")
-                self.prompt()
-                error = None
-
-            if cmds == "help":
-                self.insert('insert',"Visit https://dip.org/docs for help!\n")
-                self.prompt()
-                error = None
-
-            if cmds == "credits":
-                self.insert('insert',"Thanks to Reddit, Youtube and other online sources for supporting Dip's development.  See www.dip.org for more information.\n")
-                self.prompt()
-                error = None
-
-            if cmds == "about":
-                self.insert('insert', """ Dip was created in 2020 by Raghav Nautiyal while he was a student in High School in India, as a language similar to Python but aimed at beginners. (Hence the recursive name - Dip Isn't Python).  Raghav remains Dip's principal author, although it includes many contributions from others.\n""")
-                self.prompt()
-                error = None
-
-            if cmds == "exit":
-                self.insert('insert',"Use exit() or Ctrl-C to exit\n")
-                self.prompt()
-                error = None
-
-            if cmds == "exit()":
+            if cmds == 'exit':
                 exit()
-                
 
-    
+            result, error = ds.run('<Dip Shell>', cmds)
+            
             if error:
                 self.insert('insert', '\n')
                 error_as_string = error.as_string()
@@ -311,42 +277,21 @@ class TextConsole(tk.Text):
                 self.insert('insert', '\n')
                 self.prompt()
 
-            result.elements += dt.toprint
-
-            for i in dt.toprint:
-                self.insert('insert', f'{i}\n')
-                
+            if dt.veryimp == 1:
+                for i in dt.toprint:
+                    if i == "pr":
+                        continue
+                    result.elements.append(i)
+                    self.insert('insert', f'{i}\n')
             for i in result.elements:
                 print(i)
-                if i == "":
-                    continue
-                elif type(i) == list:
-                    if "input" in i:
-                        answer = askinput(i[1])
-                        self.insert('insert', f'{answer}\n')
-                        continue
-                    if "inputint" in i:
-                        answer = askinputint(i[1])
-                        self.insert('insert', f'{answer}\n')
-                        continue
-                    if "say" in i:
-                        say(i[1])
-                        continue
-                
-                if i in dt.toprint:
+                if i == "" or i == "pr" or i in dt.toprint:
                     continue
                 self.insert('insert', f'{i}\n')
             self.prompt()
             dt.toprint = []
 
             dt.veryimp = 0
-            
-            #print(insert)
-            #print(toinsert)
-            #self.insert('insert', f"{result}\n")
-            #self.prompt()
-            #dt.toprint = []
-            #dt.veryimp = 0
     
         else:
             self.insert('insert', '\n')
@@ -431,7 +376,7 @@ class DreamText:
 
     def __init__(self, master=None): 
         if master:
-            master.title("Untitled - Dip Version 0.1 - DDE")
+            master.title("Untitled - Dip")
             master.geometry("1200x700")     
 
             font_specs = ("courier", 14)
@@ -452,9 +397,9 @@ class DreamText:
 
     def set_window_title(self, name=None):
         if name:
-            self.master.title(name + " - Dip Version 0.1 - DDE")
+            self.master.title(name + " - Dip")
         else:
-            self.master.title("Untitled - Dip Version 0.1 - DDE")
+            self.master.title("Untitled - Dip")
 
     def new_file(self, *args):
         self.textarea.delete(1.0, tk.END)
@@ -511,19 +456,8 @@ class DreamText:
         self.textarea.bind('<Command-R>', self.run)
         self.textarea.bind('<Key>', self.statusbar.update_status)
     
+    
 
-def askinput(q):
-    answer = simpledialog.askstring("Input", f"{q}",
-                                parent=tk.Tk())
-    return answer
-
-def askinputint(q):
-    answer = simpledialog.askinteger("Input Integer", f"{q}",
-                                    parent=tk.Tk())
-    return answer
-
-def say(q):
-    os.system(f"say '{q}'")
 
 class Main:
     def __init__(self):
@@ -550,4 +484,3 @@ def maindef():
 
 if __name__ == '__main__':
     maindef()
-    

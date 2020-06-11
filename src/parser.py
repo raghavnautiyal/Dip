@@ -601,7 +601,7 @@ class Parser:
             if self.current_tok.type != TT_IDENTIFIER:
                 return res.failure(InvalidSyntaxError(
                     self.current_tok.pos_start, self.current_tok.pos_end,
-                    "Expected an indentifier here!"
+                    "Expected an indentifier (variable name) here!"
             ))
 
             var_name = self.current_tok
@@ -615,11 +615,8 @@ class Parser:
                 ))
             res.register_advancement()
             self.advance()
-
             expr = res.register(self.expr())
-
             if res.error: return res
-
             return res.success(VarAssignNode(var_name, expr))
 
         node = res.register(self.bin_op(self.comp_expr, ((TT_KEYWORD, 'and'), (TT_KEYWORD, 'or'))))
@@ -630,6 +627,7 @@ class Parser:
                 "Expected 'variable', for, while, if, function, int, float, identifier, '+', '-' or '(', '[', 'not'"
 
             ))
+            print(res.error)
 
         return res.success(node)
 

@@ -215,7 +215,7 @@ class Lexer:
         def make_identifier(self):
             id_str = ''
             pos_start = self.pos.copy()
-            while self.current_char != None and self.current_char in LETTERS_DIGITS + '_' + '-':
+            while self.current_char != None and self.current_char in LETTERS_DIGITS + '_':
                 id_str += self.current_char
                 self.advance()
 
@@ -238,7 +238,7 @@ class Lexer:
             self.advance()
 
             if self.current_char == '=':
-                self.advance()
+                #self.advance()
                 return Token(TT_NE, pos_start=pos_start, pos_end=self.pos), None
 
             self.advance()
@@ -248,11 +248,11 @@ class Lexer:
             tok_type = TT_EQUALS
             pos_start = self.pos.copy()
             self.advance()
-
+            
             if self.current_char == '=':
-                self.advance()
+                #self.advance()
                 tok_type = TT_EE
-
+                
             return Token(tok_type, pos_start=pos_start, pos_end=self.pos)
 
         def make_less_than(self):
@@ -261,7 +261,7 @@ class Lexer:
             self.advance()
 
             if self.current_char == '=':
-                self.advance()
+                #self.advance()
                 tok_type = TT_LTE
 
             return Token(tok_type, pos_start=pos_start, pos_end=self.pos)
@@ -272,7 +272,7 @@ class Lexer:
             self.advance()
 
             if self.current_char == '=':
-                self.advance()
+                #self.advance()
                 tok_type = TT_GTE
 
             return Token(tok_type, pos_start=pos_start, pos_end=self.pos)

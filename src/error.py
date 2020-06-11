@@ -27,6 +27,7 @@ class IllegalCharError(Error):
   def __init__(self, pos_start, pos_end, details):
     super().__init__(pos_start, pos_end, 'Illegal Character', details)
 
+
 class ExpectedCharError(Error):
   def __init__(self, pos_start, pos_end, details):
     super().__init__(pos_start, pos_end, 'Expected Character', details)
@@ -34,7 +35,6 @@ class ExpectedCharError(Error):
 class InvalidSyntaxError(Error):
   def __init__(self, pos_start, pos_end, details=''):
     super().__init__(pos_start, pos_end, 'Invalid Syntax / Character Not Found', details)
-
 
 class RTError(Error):
         def __init__(self, pos_start, pos_end, details, context):
@@ -59,3 +59,15 @@ class RTError(Error):
 
             return  "There seems to be an error - Here's a traceback (most recent error last):\n" + result
     
+class CustomError:
+  def __init__(self, error_name, details):
+    self.error_name = error_name
+    self.details = details
+
+  def __repr__(self):
+    return f'{self.error_name}: {self.details}'
+  
+
+class UserError(CustomError):
+  def __init__(self, details=''):
+    super().__init__('Custom Error', details)

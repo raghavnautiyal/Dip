@@ -1,6 +1,6 @@
 # Dreamscript program that uses the 'factorial' function from the stdlib
 
-run("stdlib/math.drm")
+use("stdlib/math.dip")
 
 variable term = input_integer("Which number's factorial would you like? ")
 

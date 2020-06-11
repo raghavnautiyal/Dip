@@ -11,7 +11,6 @@ import math
 import random
 from position import *
 import dreamscript as ds
-import speech_recognition as sr
 from Dreamshell import *
 import Dreamshell as dshell
 import webbrowser as wb
@@ -541,13 +540,15 @@ class BuiltInFunction(BaseFunction):
     execute_input.arg_names = ["value"]
 
     def execute_input_integer(self, exec_ctx):
-        p = str(exec_ctx.symbol_table.get('value'))
-
-        answer = input(p)
-
-        #answer = simpledialog.askinteger("Input Integer", f"{p}",
-                                #parent=tk.Tk())
-        return RTResult().success(Number(answer))
+        while True:
+            text = input(str(exec_ctx.symbol_table.get('value')))
+            try:
+                number = int(text)
+                break
+            except ValueError:
+                print(f"'{text}' must be an integer. Try again!")
+        return RTResult().success(Number(number))
+            
     execute_input_integer.arg_names = ["value"]
 
     def execute_clear(self, exec_ctx):
@@ -694,6 +695,37 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(String(text.path()))
     execute_getpath.arg_names = []
 
+    def execute_read(self, exec_ctx):
+        fn = str(exec_ctx.symbol_table.get("fn"))
+        try:
+            with open(fn, "r") as f:
+                script = f.read()
+                return RTResult().success(String(script))
+        except Exception as e:
+            return RTResult().failure(RTError(
+                self.pos_start, self.pos_end,
+                f"Failed to load file \"{fn}\"\n" + str(e),
+                exec_ctx
+            ))
+        
+    execute_read.arg_names = ["fn"]
+
+    def execute_write(self, exec_ctx):
+        fn = str(exec_ctx.symbol_table.get("fn"))
+        content = str(exec_ctx.symbol_table.get("content"))
+        try:
+            with open(fn, "a") as f:
+                script = f.write(content)
+                return RTResult().success(String(script))
+        except Exception as e:
+            return RTResult().failure(RTError(
+                self.pos_start, self.pos_end,
+                f"Failed to load file \"{fn}\"\n" + str(e),
+                exec_ctx
+            ))
+        
+    execute_write.arg_names = ["fn", "content"]
+
     def execute_extend(self, exec_ctx):
         listA = exec_ctx.symbol_table.get("listA")
         listB = exec_ctx.symbol_table.get("listB")
@@ -802,4 +834,3 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(Number.null)
 
     execute_use.arg_names = ["fn"]
-

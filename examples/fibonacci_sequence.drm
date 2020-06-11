@@ -1,4 +1,4 @@
-run("stdlib/math.drm")
+use("stdlib/math.dip")
 
 variable terms = input_integer("How many terms?   ")
 

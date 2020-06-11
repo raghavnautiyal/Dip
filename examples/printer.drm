@@ -1,0 +1,14 @@
+# An interactive quiz game made in dreamscript
+
+print("Hello, and welcome to this quiz!")
+
+wait(1)
+
+variable question = input_integer("what is 1 + 1?")
+
+if 
+print("Very good")
+
+wait(1)
+
+variable question = input("what is 1 + 1?")
