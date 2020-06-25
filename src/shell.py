@@ -1,7 +1,7 @@
 from dreamscript import *
 from parser import *
 
-print("\nDip Version 0.1 - Beta\n")
+print("\nDip Version R \n")
 print('\nType "help", "copyright", "credits" or "about" for more information.\n')
 
 while True:
@@ -13,11 +13,11 @@ while True:
         continue
 
     if raw_text == "help":
-        print("Visit https://dip.org/docs for help!")
+        print("Visit https://dip-lang.org/docs for help!")
         continue
 
     if raw_text == "credits":
-        print("Thanks to Reddit, Youtube and other online sources for supporting Dip's development.  See www.dip.org for more information.")
+        print("Thanks to Reddit, Youtube and other online sources for supporting Dip's development.  See www.dip-lang.org for more information.")
         continue
 
     if raw_text == "about":
@@ -38,21 +38,23 @@ while True:
 
         
     result, error = run('<stdin>', raw_text)
-
-    bear = """\n .------.
-(        )    ..
- `------'   .' /
-      O    /  ;
-        o i  OO
-         C    `-.
-         |    <-'
-         (  ,--.
-          \  \_)
-           \  :
-            `._\.
-\n"""
-
     
+    bear ="""
+
+            .-`-,\__
+              ."`   `,
+            .'_.  ._  `;.
+        __ / `      `  `.\ .--.
+       /--,| 0)   0)     )`_.-,)
+      |    ;.-----.__ _-');   /
+       '--./         `.`/  `"`
+          :   '`      |.
+          | \     /  //
+           \ '---'  /'
+            `------' \\
+             _/       `--...
+
+    """
 
     if error: 
         print(error.as_string())

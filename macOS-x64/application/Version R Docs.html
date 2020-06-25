@@ -1,0 +1,401 @@
+
+<link rel="stylesheet" href="/static/solarized-dark.css"/>
+    <link rel="stylesheet" href="/static/vendor_10880690442070639967.css"/>
+    <link rel="stylesheet" href="/static/fonts_8049871103083011125.css"/>
+    <link rel="stylesheet" href="/static/app_12353512879680388157.css"/>
+
+<link rel="icon" type="image/png" sizes="32x32" href="static/dip logo.png">
+
+
+
+
+<title>Dip Programming Language: Docs</title>
+<div class = "blue">
+    <div style = "padding-left: 15px;">
+
+ <h1 id="dip">Dip</h1>
+<p >Dip is a dynamically typed interpreted programming language written in Python, which gives
+emphasis to readability and ease of use, while also providing the power of all of python’s
+libraries. Dip is aimed at beginners, looking to start with programming.</p>
+</div>
+</div>
+<div style = "padding-left: 15px;">
+
+<h1 id="working-with-dip">Working with Dip</h1>
+<p>Dip gives you access to a development environment which comes bundled with Dip - The DDE,
+short for Dip Development Environment. It gathers inspiration from Python’s IDLE, and has a
+text editor for you to edit and create dip programs, and an interactive shell, where you can
+execute and see the output of your programs.</p>
+<p>You can evaluate expressions by writing them after <code>Dip&gt;</code></p>
+<p><code>Dip&gt; 1 + 2
+</br>
+3
+</br>
+
+Dip&gt; 1 - 3
+</br>
+
+-2
+</br>
+
+Dip&gt; 3 + 9
+</br>
+
+12
+</code></p>
+</div>
+<div class = "blue" style = "padding-left: 15px;">
+    <h1 id="evaluating-external-files">Evaluating external files</h1>
+    <p>It&#39;s possible to load external files written in Dip by calling the ‘run’ function inside the DDE
+    interface by executing the run function followed by the relative path of the files that you want to
+    be evaluated.</p>
+    <p><code>Dip Beta (Version 0.1)</br>
+    Type "help", "copyright", "credits" or "about" for more information.
+    </code>
+    </br>
+    <code>Dip&gt; run(&quot;/Users/raghav/Desktop/hello_dip.dip&quot;)
+    </br>
+    Hello, Dip
+    </code></p>
+</div>
+<div style = "padding-left: 15px;">
+<h1 id="dip-basics">Dip basics</h1>
+<p>Most of Dip’s functions are either reminiscent of Python, or build off them, so people getting
+started with programming (or even Python programmers for that matter) won’t have any trouble
+understanding them. These basics are divided into three different categories, data types, builtin
+functions and the standard library.</p>
+<h2 id="dip-s-data-types">Dip’s Data Types</h2>
+<p>Dip contains 5 data types which you will generally interact with. These are Numbers, Strings,
+Lists, Functions and Errors.</p>
+<p><strong>Numbers</strong></p>
+<p>Dip supports integers and decimals, called ints and floats in python. Note that anything following
+a ‘#’ on the same line is interpreted as a comment and not evaluated.</p>
+<p><code>Dip Beta (Version 0.1)</br>
+Type "help", "copyright", "credits" or "about" for more information.
+</p>
+<p>Dip&gt; 10 / 2
+</br>
+5.0
+</br>
+Dip&gt; 1 + 3</br>
+4</br>
+Dip&gt; 34 * 34</br>
+1156</code></p>
+<p>Note that in case of recurring decimals, they are left at 15 decimal places</p>
+<p><code>Dip&gt; 100 / 6</br>
+16.666666666666668</code></p>
+<p>Some functions you can perform on numbers are sin, cos, tan and pi.</p>
+<p><code>Dip&gt; sin(45)</br>
+0.8509035245341184</br>
+Dip&gt; cos(45)</br>
+0.5253219888177297</br>
+Dip&gt; tan(45)</br>
+1.6197751905438615</br>
+Dip&gt; pi</br>
+3.141592653589793</code></p>
+<p><strong>Strings</strong></p>
+<p>A string is a combination of zero or more characters contains inside double-quotes.</p>
+<p><code>Dip&gt; &quot;Hello, Dip!&quot;</br>
+"Hello, Dip!"
+</code></p>
+<p>There are many things that you can do with strings, including adding them, iterating through
+them, and joining them.</p>
+<p><code>Dip&gt; join(&quot;Hello &quot;, &quot;Dip!&quot;)
+Hello Dip!</br>
+Dip&gt; print(&quot;I am dip, an interpreted programming language&quot;)</br>
+I am dip, an interpreted programming language</br>
+Dip&gt; variable str = &quot;string!&quot;</br>
+string!</br>
+Dip&gt; for i = 0 to length(str) then print(str / i)</br>
+s</br>
+t</br>
+r</br>
+i</br>
+n</br>
+g</br>
+!</code></p>
+<p><strong>Lists</strong></p>
+<p>A list is a combination of values inside square braces, separated by commas.</br>
+<code>Dip&gt; [&quot;l&quot;, &quot;i&quot;, &quot;s&quot;, &quot;t&quot;]</br>
+[&quot;l&quot;, &quot;i&quot;, &quot;s&quot;, &quot;t&quot;]</code></p>
+<p>Lists can contain integers, strings, functions and even other lists.</p>
+<p><code>Dip&gt; [[1, 2], [3, 4], [5, 6]]</br>
+1, 2, 3, 4, 5, 6
+Dip&gt; </code></p>
+<p>There are many things that you can do with lists, including ‘join’, which joins two lists, ‘add’,
+which adds an element to a list, ‘remove’, which removes an element at an index from a list.</p>
+<p><code>Dip&gt; variable new_list = join([1, 2, 3], [4, 5, 6])</br>
+1, 2, 3, 4, 5, 6</br>
+Dip&gt; new_list</br>
+1, 2, 3, 4, 5, 6</br>
+Dip&gt; add(new_list, 7)</br>
+1, 2, 3, 4, 5, 6, 7</br>
+Dip&gt; new_list</br>
+1, 2, 3, 4, 5, 6, 7</br>
+Dip&gt; remove(new_list, 4)</br>
+5</br>
+Dip&gt; new_list</br>
+1, 2, 3, 4, 6, 7</br>
+Dip&gt; </code></br>
+<p>Note that the ‘remove’ function removes the element from the 4th index, which in this case, is 5.</p>
+<p><strong>Functions</strong></p>
+<p>Functions can be defined using the &#39;function&#39; keyword, followed by the name of the function, and then its arguments in parenthesis. For a single line function, you can use &#39;-&gt;&#39; and then type what you want it to do. For a multi-line function, enter a new line and end the function with an end statement</p>
+<p><code>Dip&gt; function add(a, b) -&gt; print(a + b) </br> function add </p>
+Dip&gt; add(4, 5)</br>
+9</br>
+Dip&gt; </code></p>
+<p><code>
+function odd_or_even(number)</br>
+    if number % 2 == 0 then print(&quot;even&quot;) else print(&quot;odd&quot;)</br>
+end
+</code></p>
+<p>Read more about functions in the builtin functions section!</p>
+<p><strong>Errors</strong></p>
+<p>Errors are generated automatically when the user tries to evaluate invalid code. Dip contains 5
+different error types, Illegal Character Error, Expected Character Error, Runtime Errors, Invalid
+Syntax Errors and Custom Errors. Custom errors can also be generated using the ‘error’
+function followed by a string inside parenthesis. The string will be the message of the error.
+Errors in the interpreter can help the user by providing insightful commentary.</p>
+<p><strong>Illegal Character Errors - Called when an illegal character is found</strong>
+<code>Dip&gt; @</br>
+Illegal Character: &#39;@&#39;</br>
+File Dip Shell, line 1</br>
+@</br>
+^</br>
+</code></p>
+<p><strong>Expected Character Errors - Called when a character that was supposed to be in a certain position is not found</strong></p>
+<p><code>Invalid Syntax / Character Not Found: Expected &#39;end&#39;</br>
+File <Dip Shell>, line 1</br>
+function add(a, b); return a + b
+                                     ^</br></br>
+</code>
+<strong>Runtime Errors - A range of errors that might rise at runtime</strong></p>
+<p><code>Runtime Error: Illegal operation - check you are comparing two different data types (eg. integer and string)
+File Dip Shell, line 1</p>
+<p>1 - &quot;1&quot;</br>
+^^^^^^^</br>
+</code></p>
+<p><strong>Invalid Syntax Errors - Called when the syntax is invalid</strong></br>
+<code>Invalid Syntax / Character Not Found: Expected int, float, identifier, &#39;+&#39;, &#39;-&#39;, &#39;(&#39;, &#39;[&#39;, if, for, while or function</br>
+File Dip Shell, line 1</p></br>
+<p>5 === 5</br>
+       ^</br>
+ </code></p>
+<p><strong>Custom Errors - User Defined errors that can be called any time</strong></p></br>
+<p> <code>
+Dip&gt; error(&quot;test error&quot;)</br>
+Custom Error: test error</br>
+ </code>
+These errors can then be used like the built-in errors.</p>
+</div>
+
+
+<div class = "blue" style = "padding-left: 15px">
+
+<h2 id="dip-s-built-in-functions">Dip’s Built-in Functions</h2>
+<p><strong>What is a Builtin Function</strong></p>
+<p>How do these functions actually work under the hood? In reality, they are nothing more than a function written in Python, that the interpreter calls when evaluating the symbol associated to it. That&#39;s how I inserted basic functionalities into the language like arithmetic operations and list manipulation, but it doesn&#39;t stop here, from very simple builtin operations you can write complex functions like the ones in the std library and expand the functionalities of the language without writing a single line of Python.</p>
+<p><strong>Print</strong></p>
+<p>Prints text to the screen</p>
+<p><code>Dip&gt; print(&quot;I am dip, an interpreted programming language&quot;)</br>
+I am dip, an interpreted programming language</code></p>
+<p><strong>Say</strong></p>
+<p>Uses the Operating System’s ‘say’ command and says whatever is passed into it. Returns nothing.</p>
+<p><code>
+Dip&gt; say(&quot;hi!&quot;)</br>
+0</br>
+Dip&gt;
+</code></p>
+<p><strong>Random Int</strong></p>
+<p>Selects a random integer from the range given to it</p>
+<p><code>Dip&gt; random_int(0, 10)</br>
+10</br>
+Dip&gt; random_int(0, 10)</br>
+9</br>
+Dip&gt; random_int(0, 10)</br>
+0</code></p>
+<p><strong>Root</strong></p>
+<p>Gets the square root of the number given to it</p>
+<p><code>Dip&gt; root(4)</br>
+2.0</code></p>
+<p><em>*Sin</em></p>
+<p>Calculates the sin value of a given number</p>
+<p><code>Dip&gt; sin(45)</br>
+0.8509035245341184</code></p>
+<p><strong>Cos</strong></p>
+<p>Calculates the cos value of a given number</p>
+<p><code>Dip&gt; cos(45)</br>
+0.5253219888177297</code></p>
+<p><strong>Tan</strong></p>
+<p>Calculates the tan value of a given number</p>
+<p><code>Dip&gt; tan(45)</br>
+1.6197751905438615</code></p>
+<p><strong>Input</strong></p>
+<p>Gets User Input</p>
+<p><code>Dip&gt; input(&quot;User Input...&quot;)</br>
+ok</code></p>
+<p><strong>Input_Integer</strong></p>
+<p>Gets User Input and ensures it is an integer</p>
+<p><code>Dip&gt; input_integer(&quot;User Input...&quot;)</br>
+23</code></p>
+<p><code>Dip&gt; input_integer(&quot;User Input...&quot;)</br>
+Must be an integer, try again</br>
+Dip&gt;input_integer(&quot;User Input...&quot;)</code></p>
+<p><strong>is_number()</strong></p>
+<p>Checks if the argument passed is a number</p>
+<p><code>
+Dip&gt; is_number(34)</br>
+1</br>
+Dip&gt; is_number(&quot;F&quot;)</br>
+0</code></p>
+<p><strong>is_string()</strong></p>
+<p>Checks if the argument passed is a string</p>
+<p><code>
+Dip&gt; is_string(&quot;string&quot;)</br>
+1</br>
+Dip&gt; is_string(34)</br>
+0</code></p>
+<p><strong>is_list()</strong></p>
+<p>Checks if the argument passed is a list</p>
+<p><code>
+Dip&gt; is_list([3, 4, 5])</br>
+1</br>
+Dip&gt; is_list(34)</br>
+0</code></p>
+<p><strong>is_function()</strong></p>
+<p>Checks if the argument passed is a function</p>
+<p><code>Dip&gt; variable x = function add(a, b) -&gt; a + b</p>
+<p>function add</br>
+Dip&gt; x</p>
+<p><function add>
+Dip&gt; is_function(x)</br>
+1</br>
+Dip&gt; is_function(&quot;F&quot;)</br>
+0
+Dip&gt;</code></p>
+<p><strong>add()</strong></p>
+<p>Adds an element to a list</p>
+<p><code>Dip&gt; variable lst = [0]</br>
+0</br>
+Dip&gt; add(lst, 1)</br>
+0, 1</br>
+Dip&gt; lst</br>
+0, 1</br>
+Dip&gt;</code></p>
+<p><strong>remove()</strong></p>
+<p>Removes the element at index in a list</p>
+<p><code>Dip&gt; remove(lst, 0)</br>
+0</br>
+Dip&gt; lst</br>
+1</br>
+Dip&gt;</code></p>
+<p><strong>join()</strong></p>
+<p>Joins two lists or strings</p>
+<p><code>Dip&gt; join(lst, [2, 3])</br>
+1, 2, 3</br>
+Dip&gt; join(&quot;hi&quot;, &quot; there&quot;)</br>
+hi there</br>
+Dip&gt;</code></p>
+<p><strong>integer()</strong></p>
+<p>Converts argument to an integer</p>
+<p><code>Dip&gt; integer(&quot;4&quot;)</br>
+4</br>
+Dip&gt; integer(&quot;definitely not an integer&quot;)</p>
+<p>Runtime Error: ValueError: Invalid literal for integer() with base 10: &#39;definitely not an integer&#39;
+File Dip Shell, line 1</p>
+<p>integer(&quot;definitely not an integer&quot;)</code></p>
+<p><strong>decimal()</strong></p>
+<p>Converts argument to a decimal</p>
+<p><code>Dip&gt; decimal(&quot;34.3434&quot;)</br>
+34.3434</br>
+Dip&gt; decimal(&quot;definitely not an decimal&quot;)</p>
+<p>Runtime Error: ValueError: Could not convert string to decimal: &#39;definitely not an decimal&#39;
+File Dip Shell, line 1</p>
+<p>decimal(&quot;definitely not an decimal&quot;)</code></p>
+<p><strong>string()</strong></p>
+<p>Converts argument to a string</p>
+<p><code>Dip&gt; string(3434343)</br>
+"3434343"</code></p>
+<p><strong>wait()</strong></p>
+<p>Freezes the program for the number of seconds provided in the argument</p>
+<p><code>Dip&gt; wait(3)</br>
+</code></p>
+<p><strong>open()</strong></p>
+<p>Opens the website name given in the argument</p>
+<p><code>Dip&gt; open(&quot;google.com&quot;)</code></p>
+</div>
+</div>
+
+<div style = "padding-left: 15px;">
+<h2 id="dip-s-standard-library">Dip’s Standard Library</h2>
+<p>The standard library is a collection of custom functions written in Dip that gets automatically
+loaded when you run the Dip interface.</p>
+<p><strong>Loops in Dip</strong></p>
+<p>There are two major types of loops in Dip, for loops and while loops.</p>
+<p><strong>For Loops</strong></p>
+<p>Each for loop begins with the word ‘for’ and then defines its range. This is done like this:</p>
+<code>Dip> for i = 0 to 5</code>
+
+<p>After this, using the then keyword, users can specify what needs to be done for each of these
+values.</p>
+<code>Dip>  for i = 0 to 5 then print(i)</br>
+0</br>
+1</br>
+2</br>
+3</br>
+4</code>
+<p>Note that only ‘i’ can be used as an iterable in for loops in Dip.</p>
+<p><strong>While Loops</strong></p>
+<code>Dip>  variable x = 0</br>
+0</br>
+Dip>  while x < 5 then; print(x); variable x = x + 1 end</br>
+0</br>
+1</br>
+2</br>
+3</br>
+4</code>
+<p>Note that a ‘;’ defines a new line
+Note that while loops can use any variable as an iterable</p>
+<p><strong>Recursion in Dip</strong></p>
+<p>Here is an example of a recursive program in Dip - A function to calculate the factorial of a number</p>
+<p><code></p>
+
+
+<h1 id="factorial-function">factorial function</h1>
+<p>function factorial(term)</p>
+<pre><code><span class="hljs-keyword">variable</span> fact = <span class="hljs-number">1</span>
+<span class="hljs-keyword">if</span> term &gt;= <span class="hljs-number">1</span> <span class="hljs-keyword">then</span>
+    <span class="hljs-keyword">for</span> i = <span class="hljs-number">1</span> <span class="hljs-keyword">to</span> term + <span class="hljs-number">1</span> <span class="hljs-keyword">then</span>
+        <span class="hljs-keyword">variable</span> fact = fact * i
+    <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+say(fact)
+</br>end
+</code></pre><p>
+</code></p>
+<p>Another function in Dip - the famous Fibonacci function</p>
+<p><code></p>
+<h1 id="fibonnaci-function">Fibonnaci Function</h1>
+<p>function fib(nterms)</p>
+<pre><code><span class="hljs-keyword">variable</span> n1 <span class="hljs-comment">= 0</span>
+<span class="hljs-keyword">variable</span> <span class="hljs-comment">n2 = 1</span>
+<span class="hljs-keyword">variable</span> <span class="hljs-comment">count = 0</span>
+
+if <span class="hljs-comment">nterms &lt;= 0 then print(</span><span class="hljs-comment">"Input a positive integer"</span><span class="hljs-comment">)</span>
+if <span class="hljs-comment">nterms == 1 then</span>
+    print(<span class="hljs-string">"Fibonnaci sequence upto"</span> + <span class="hljs-string">" 1"</span> + <span class="hljs-string">":"</span>)
+    print(n1)
+else
+    print(<span class="hljs-string">"Fibonacci sequence:"</span>)
+    while <span class="hljs-comment">count &lt; nterms then</span>
+        print(n1)
+        <span class="hljs-keyword">variable</span> <span class="hljs-comment">nth = n1 + n2</span>
+        <span class="hljs-keyword">variable</span> <span class="hljs-comment">n1 = n2</span>
+        <span class="hljs-keyword">variable</span> <span class="hljs-comment">n2 = nth</span>
+        <span class="hljs-keyword">variable</span> <span class="hljs-comment">count = count + 1</span>
+    end
+end
+</code></pre><p>end
+</code></p>
+<p></p>
+</div>

@@ -19,6 +19,7 @@ import tkinter as tk
 import time as time
 from tkinter import simpledialog
 import config
+import types
 
 veryimp = 0
 toprint = []
@@ -725,6 +726,42 @@ class BuiltInFunction(BaseFunction):
             ))
         
     execute_write.arg_names = ["fn", "content"]
+
+    def execute_eval(self, exec_ctx):
+        statement = str(exec_ctx.symbol_table.get("arg"))
+        
+        try:
+            exec(statement)
+        except Exception as e:
+            return RTResult().failure(RTError(
+                self.pos_start, self.pos_end,
+                str(e),
+                exec_ctx
+            ))
+
+
+        return RTResult().success(Number.null)
+    
+    execute_eval.arg_names = ["arg"]
+        
+    def execute_function(self, exec_ctx):
+        statement = str(exec_ctx.symbol_table.get("funcname"))
+        argument = str(exec_ctx.symbol_table.get("args"))
+        
+        try:
+            eval(f"{statement}({argument})")
+        except Exception as e:
+            return RTResult().failure(RTError(
+                self.pos_start, self.pos_end,
+                str(e),
+                exec_ctx
+            ))
+
+
+        return RTResult().success(eval(f"{statement}({argument})"))
+        
+
+    execute_function.arg_names = ["funcname", "args"]
 
     def execute_extend(self, exec_ctx):
         listA = exec_ctx.symbol_table.get("listA")

@@ -1,0 +1,5 @@
+variable python_code = "
+for i in range(0, 5): print(i)
+"
+
+evaluate(python_code)
