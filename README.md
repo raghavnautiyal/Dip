@@ -502,6 +502,5 @@ end
 
 # Installation
 
-Dip isn’t available for installation yet, as I continue to work on it. However, expect a link to Dip’s website and installation instructions in the next couple of weeks!
-
+Install Dip at dip-lang.org/install
 
