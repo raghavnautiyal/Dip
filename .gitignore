@@ -1,5 +1,7 @@
 # Build system temporary files
 build/**
 
+src/build/**
+
 # Python cache
 **/__pycache__
