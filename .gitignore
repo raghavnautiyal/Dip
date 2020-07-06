@@ -3,5 +3,15 @@ build/**
 
 src/build/**
 
+dist/**
+
 # Python cache
 **/__pycache__
+
+target/**
+
+macos-installer-builder/**
+
+macOS-64/**
+
+UNKNOWN.egg-info/**
