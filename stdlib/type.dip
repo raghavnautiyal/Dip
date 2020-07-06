@@ -1,9 +1,0 @@
-# A Dreamscript function to check the tye of an object
-
-function type(var) 
-    if is_string(var) == 1 then print("string") 
-    if is_number(var) == 1 then print("number") 
-    if is_list(var) == 1 then print("list") 
-    if is_function(var) == 1 then print("function")
-end
-

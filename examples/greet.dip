@@ -1,5 +1,0 @@
-# A program to greet the user. 
-
-variable name =  input("Enter Your Name: ")
-
-print("Hello, " + name + "!")

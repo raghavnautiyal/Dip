@@ -1,9 +1,0 @@
-# A simple dreamscript program demonstrating the use of the strings.drm file
-
-use("stdlib/strings.drm")
-
-# find the character in a string at a given index
-
-find_character("str", 2)
-
-rev("papa")

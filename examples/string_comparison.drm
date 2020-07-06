@@ -1,3 +1,0 @@
-# test
-
-if "string" == "string" then print("You can compare strings!")
