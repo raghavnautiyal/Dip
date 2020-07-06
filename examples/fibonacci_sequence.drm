@@ -1,0 +1,5 @@
+use("stdlib/math.dip")
+
+variable terms = input_integer("How many terms?   ")
+
+fib(terms)

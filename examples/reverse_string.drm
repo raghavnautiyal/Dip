@@ -1,0 +1,5 @@
+# Reverses a string using the strings.drm stdlib file
+
+variable str = input("Which string do you want to reverse?  ")
+
+print(reverse(str))

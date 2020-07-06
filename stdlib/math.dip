@@ -1,0 +1,45 @@
+# Fibonnaci Function
+
+function fib(nterms) 
+
+    variable n1 = 0
+    variable n2 = 1
+    variable count = 0
+
+    if nterms <= 0 then print("Input a positive integer")
+    if nterms == 1 then 
+        print("Fibonnaci sequence upto" + " 1" + ":")
+        print(n1)
+    else
+        print("Fibonacci sequence:")
+        while count < nterms then
+            print(n1)
+            variable nth = n1 + n2
+            variable n1 = n2
+            variable n2 = nth
+            variable count = count + 1
+        end
+    end
+end
+
+# factorial function
+
+function factorial(term)
+    variable fact = 1
+    if term >= 1 then
+        for i = 1 to term + 1 then
+            variable fact = fact * i
+        end
+    end
+    say(fact)
+end
+
+# Squares a value
+
+function square(num) -> num ^ 2
+
+# Checks if a number is even or odd
+
+function odd_or_even(number)
+    if number % 2 == 0 then print("even") else print("odd") 
+end

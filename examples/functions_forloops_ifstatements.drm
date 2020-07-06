@@ -1,0 +1,29 @@
+# A simple dreamscript containing the results of me playing around :)
+
+function lyfy(prefix) -> prefix + "ly"
+
+function join(elements, separator)
+	variable result = ""
+	variable len = length(elements)
+
+	for i = 0 to len then
+		variable result = result + elements/i
+		if i != len - 1 then variable result = result + separator
+	end
+
+	return result
+end
+
+function map(elements, func)
+	variable new_elements = []
+
+	for i = 0 to length(elements) then
+		add(new_elements, func(elements/i))
+	end
+
+	return new_elements
+end
+
+for i = 0 to 5 then
+	say(join(map(["splendid", "disastrous"], lyfy), ", "))
+end

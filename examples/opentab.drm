@@ -1,0 +1,5 @@
+# A dreamscript program to open a tab using the user's input
+
+variable user_input = input("Which website do you want to open? ")
+
+open(string(user_input))
