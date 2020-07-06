@@ -20,6 +20,7 @@ import time as time
 from tkinter import simpledialog
 import config
 import types
+import exec_with_return
 
 veryimp = 0
 toprint = []
@@ -729,18 +730,14 @@ class BuiltInFunction(BaseFunction):
 
     def execute_eval(self, exec_ctx):
         statement = str(exec_ctx.symbol_table.get("arg"))
-        
         try:
-            exec(statement)
+            return RTResult().success(exec_with_return.exec_with_return(statement))
         except Exception as e:
             return RTResult().failure(RTError(
                 self.pos_start, self.pos_end,
                 str(e),
                 exec_ctx
             ))
-
-
-        return RTResult().success(Number.null)
     
     execute_eval.arg_names = ["arg"]
         
@@ -749,16 +746,16 @@ class BuiltInFunction(BaseFunction):
         argument = str(exec_ctx.symbol_table.get("args"))
         
         try:
-            eval(f"{statement}({argument})")
+            exec(f"{statement}({argument})")
         except Exception as e:
             return RTResult().failure(RTError(
                 self.pos_start, self.pos_end,
-                str(e),
+                f"{statement} isn't a builtin function" + str(e),
                 exec_ctx
             ))
 
 
-        return RTResult().success(eval(f"{statement}({argument})"))
+        return RTResult().success(exec(f"{statement}({argument})"))
         
 
     execute_function.arg_names = ["funcname", "args"]

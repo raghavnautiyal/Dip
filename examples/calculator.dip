@@ -1,0 +1,43 @@
+# A calculator program in Dip
+
+# Greet the user
+print("Welcome to Dip's calculator")
+
+# Give the user four options
+
+print("Press 1 for addition")
+print("Press 2 for subtraction")
+print("Press 3 for multiplication")
+print("Press 4 for division")
+
+# Ensure the code keeps on looping
+
+while true then
+
+    # Ask user for the operation they want to perform
+
+    variable operation = input_integer("Operation: ")
+
+    # If the operation is 1, 2, 3 or 4 then procedd
+
+    if operation == 1 or operation == 2 or operation == 3 or operation == 4 then
+
+        variable num1 = input_integer("Enter first number: ")
+        variable num2 = input_integer("Enter second number: ")
+
+        if operation == 1 then print(num1 + num2)
+
+        if operation == 2 then print(num1 - num2)
+
+        if operation == 3 then print(num1 * num2)
+
+        if operation == 4 then print(num1 / num2)
+
+        # If the operation is not in 1, 2, 3 or 4 then prompt the user again
+ 
+        else
+            print("Input must be 1, 2, 3 or 4")
+            continue
+
+    end
+end

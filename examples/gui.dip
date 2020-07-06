@@ -1,0 +1,5 @@
+variable name = input("What's your name? ")
+
+variable python_code = "import tkinter as tk;" + "root = tk.Tk();" + "root.title = 'Dip GUI';" + "label = tk.Label(root, text='Hello, " + name + "').pack()"
+
+evaluate(python_code)

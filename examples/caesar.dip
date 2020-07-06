@@ -1,0 +1,32 @@
+# Implementing the Caesar cipher in Dip
+
+# Including all of the letters in the English alphabet
+
+variable alphabet = "abcdefghijklmnopqrstuvwxyz "
+
+# Getting the user's input
+
+variable plaintext = input("Which word / phrase would you like to encrypt: ")
+
+# The key, which adds the value of the key to 
+
+variable key = input_integer("What would you like the key to be? ")
+
+variable ciphertext = ""
+
+for character = 0 to length(plaintext) then
+
+    for letter = 0 to length(alphabet) then
+        if plaintext / character == alphabet / letter then
+            if plaintext / character != " " then
+                variable index = letter + key
+                variable ciphertext = ciphertext + alphabet / (index % 26)
+            else
+                variable ciphertext = ciphertext + " " 
+            end
+        end
+    end
+end
+
+print("ciphertext: " + ciphertext)
+

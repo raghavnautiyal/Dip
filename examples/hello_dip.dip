@@ -1,3 +1,25 @@
-# Hello World In Dip!
+# A calculator program in Dip
 
-print("Hello, Dip")
+print("To select the operation you want to perform, click 1 for addition")
+print("Click 2 for subtraction")
+print("Click 3 for multiplication")
+print("Click 4 for division")
+
+variable operation = input_integer("Operation")
+
+if operation == 1 or operation == 2 or operation == 3 or operation == 4 then
+
+variable num1 = input_integer("Enter first number")
+variable num2 = input_integer("Enter second number")
+
+if operation == 1 then print(num1 + num2)
+
+if operation == 2 then print(num1 - num2)
+
+if operation == 3 then print(num1 * num2)
+
+if operation == 4 then print(num1 / num2)
+
+else
+print("Input must be 1, 2, 3 or 4")
+variable operation = input_integer("Operation")

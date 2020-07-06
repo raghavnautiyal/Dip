@@ -30,4 +30,8 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=True , icon='diplogo.icns')
+          console=False , icon='/Users/raghav/Desktop/School/PL_Conquests/Parser/DreamScript/src/diplogo.icns')
+app = BUNDLE(exe,
+             name='Dip.app',
+             icon='/Users/raghav/Desktop/School/PL_Conquests/Parser/DreamScript/src/diplogo.icns',
+             bundle_identifier=None)
