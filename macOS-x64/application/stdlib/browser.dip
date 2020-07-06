@@ -1,5 +1,0 @@
-# Function to google search for a specific search term
-
-function search(search_term) -> open("google.com" + "/search?q=" + string(search_term))
-
-
