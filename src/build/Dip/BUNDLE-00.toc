@@ -1,3 +1,0 @@
-([('Dip',
-   '/Users/raghav/Desktop/School/PL_Conquests/Parser/DreamScript/src/dist/Dip',
-   'EXECUTABLE')],)
