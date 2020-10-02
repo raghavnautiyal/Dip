@@ -1,3 +1,5 @@
+# Source for the Dip programming language
+
 from dreamscript import *
 from parser import *
 
