@@ -1,0 +1,68 @@
+use("/Users/raghav/Desktop/School/PL_Conquests/Dip/stdlib/random.dip")
+
+print ("I opened my eyes, but I couldn't see a thing. At first I thought that my eyes were still shut but  then I realised that I was in a dark room. The last thing I remembered was exiting my house when suddenly everything went black. I was tied to a chair, seemingly to stop me from trying to escape. I might have been able to open the knots had my hands not been handcuffed as well. A few minutes later there was suddenly a blinding white glare as someone switched on the lights. As I got accustomed to the bright glare I saw a man entering the room. He was wearing a black suit and tie and he informed me that he had asked for a ransom of $100,000,000 for me. He then left the room. ")
+
+while true then 
+
+    variable user_input = input("What do I do?  ")
+
+    if user_input == "look around" then
+    print("-----------------------------------------------------------")
+
+    print("I looked around and saw a paperclip lying on the floor close to the chair. Somebody probably dropped it when they were in the room before. ")
+
+    else
+    variable responses = ["That is not currently possible. ", "I do not understand. ", "That's not an action I recognise. "]
+    print(random(responses))
+
+    end
+
+
+    if user_input == ("pick paperclip") then
+    print("I picked up the paperclip. ")
+
+    else
+
+    print(random(["That is not currently possible. ", "I do not understand. ", "That's not an action I recognise. "]))
+
+    end
+
+    if user_input == ("use paperclip") then
+    print("I used the paperclip to open my handcuff. It took a few tries but I somehow managed to do it in the end anyways. Looks like all those prison break, crime and kidnapping novels I read had paid off after all. After I had opened my handcuffs I started untying the knots that bound me to the chair. It took a while since the knots were hard but the knots were strained, making it easier to open them. I then got out of my chair and went towards the exit. I hadn't seen a lock like this one before. ")
+
+    else
+
+    print(random(["That is not currently possible. ", "I do not understand. ", "That's not an action I recognise. "]))
+
+    end
+
+
+    if user_input == ("look lock") then 
+    print("As I examined the lock I saw that any number from one to hundred could be entered into it and it would tell me whether the password was correct or higher or lower than the number I had entered. The first number I entered was... ")
+
+    variable password_input = input_integer("User Input...")
+
+    else
+
+    print(random(["That is not currently possible. ", "I do not understand. ", "That's not an action I recognise. "]))
+
+    end
+
+    variable password = random_int(0, 100)
+
+    #help
+
+
+    if user_input == ("help") then 
+
+    print ("To move from one place to another type the name of the place or the direction where you want to go.  For example: 'left', 'exit'.")
+
+    print("To inspect a specific object or part of the room, type 'look' followed by the name of the object or room you want to study. For example: 'look window', 'look around'.")
+
+    print("To acquire an objec, type 'pick' followed by the name of the objct you want to pick  up. For example: 'pick paperclip', 'pick id card'. ")
+
+    print("To use objects, type 'use' before the name of the object you want to use. For example: 'use id card', 'use paperclip'. ")
+
+    end
+
+end
