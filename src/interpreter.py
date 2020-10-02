@@ -117,8 +117,11 @@ class Interpreter:
 
     # Unary Op-Node
 
+
     def visit_UnaryOpNode(self, node, context):
+        # runtime result object
         res = RTResult()
+
         number = res.register(self.visit(node.node, context))
         if res.should_return(): return res
     
