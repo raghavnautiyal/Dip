@@ -6,7 +6,3 @@ function random(list_)
 
     return (list_ / random_number)
 end
-
-variable x = random(["yes","no","maybe","ok","never"])
-
-print(x)

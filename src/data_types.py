@@ -522,6 +522,8 @@ class BuiltInFunction(BaseFunction):
         return RTResult().success(ans)
     execute_cos.arg_names = ["value"]
 
+   
+
     def execute_tan(self, exec_ctx):
         smt = math.tan(float(str(exec_ctx.symbol_table.get('value'))))
         ans = Number(smt)
