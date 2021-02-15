@@ -1,5 +1,7 @@
 # Dip
 
+[Website](http://www.dip-lang.org)
+
 Dip is a dynamically typed interpreted programming language written in Python, which gives emphasis to readability and ease of use, while also providing the power of all of python’s libraries. Dip is aimed at beginners, looking to start with programming.
 
 # Working with Dip
